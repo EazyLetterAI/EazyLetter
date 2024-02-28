@@ -1,0 +1,30 @@
+.slider-container {
+  padding: 30px 0px 50px 0px;
+  font-weight: 400;
+  font-size: 21px;
+  background-color: #f4f4f5;
+  overflow: hidden;
+  color: #353537;
+  text-align: center;
+}
+
+.slider {
+  padding: 20px;
+  display: flex;
+  gap: "20px";
+  animation: scrollLeft 0s linear infinite;
+}
+
+.slider img {
+  max-width: 100%;
+  margin-right: 50px; /* Adjust the space between images */
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

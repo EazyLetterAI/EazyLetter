@@ -1,0 +1,32 @@
+.content-library {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400; /* Font weight */
+  font-size: 12px; /* Font size */
+  width: 76%;
+  margin-left: 24%;
+  background-color: #f7f7f8;
+}
+
+.videoslider {
+  background-color: #f7f7f8;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Distribute space between columns */
+  gap: 0px; /* Adjust the gap size as needed */
+}
+
+.search-bar {
+  margin: 0% 10% 1% 10%;
+  position: center;
+  justify-content: center;
+  position: "relative";
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+  border: none;
+  border-radius: 20px;
+  border: 1px solid #cccccc90;
+}

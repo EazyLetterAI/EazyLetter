@@ -1,0 +1,298 @@
+.sidebar {
+  background-color: white;
+  padding: 20px;
+  width: 24%;
+  position: fixed;
+  z-index: 1;
+  /* margin: 80px 0px 0px 30px; */
+  height: 100%;
+  margin-top: 60px;
+  border: 1px solid #cccccc30;
+  border-radius: 20px;
+}
+@media (max-width: 991px) {
+  .sidebar {
+    max-width: 100%;
+  }
+}
+.div-9 {
+  gap: 20px;
+  display: flex;
+}
+@media (max-width: 991px) {
+  .div-9 {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0px;
+  }
+}
+.column {
+  line-height: normal;
+  width: 100%;
+  margin-left: 0px;
+}
+@media (max-width: 991px) {
+  .column {
+    width: 100%;
+  }
+}
+.div-10 {
+  background-color: #fff;
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 10px 0 50px;
+}
+
+.div-12 {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+@media (max-width: 991px) {
+  .div-12 {
+    padding: 0 20px;
+  }
+}
+
+.logout-button {
+  background-color: #fff;
+  display: flex;
+  border-top: 1px solid #cccccc50;
+  justify-content: space-between;
+  gap: 10px;
+}
+@media (max-width: 991px) {
+  .div-12 {
+    padding: 0 20px;
+  }
+}
+.img-4 {
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  width: 17px;
+}
+.div-13 {
+  color: #4c515a;
+  flex-grow: 1;
+  flex-basis: auto;
+  margin: auto 0;
+}
+.div-14 {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 17px 30px;
+}
+@media (max-width: 991px) {
+  .div-14 {
+    padding: 0 20px;
+  }
+}
+
+.sidebar-pages-active {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 500; /* Font weight */
+  font-size: 13px; /* Font size */
+  color: #1677ff;
+  align-self: start;
+  width: 100%;
+  display: inline-flex;
+  flex-basis: auto;
+  background-color: white;
+  border: none;
+  justify-content: flex-start; /* Change to flex-start for left alignment */
+  align-items: center;
+  padding: 12px 30px;
+  text-align: left; /* Align text to the left */
+}
+
+.sidebar-pages-active svg {
+  fill: #1677ff;
+  margin-right: 15px;
+  stroke: none;
+}
+
+.sidebar-pages {
+  padding: 12px 30px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 500; /* Font weight */
+  font-size: 13px; /* Font size */
+  color: #4c515a;
+  background-color: white;
+  border: none;
+  display: inline-flex;
+  flex-grow: 1;
+  width: 100%;
+  flex-basis: auto;
+  justify-content: flex-start; /* Change to flex-start for left alignment */
+  align-items: center;
+  text-align: left; /* Align text to the left */
+}
+
+.sidebar-pages svg {
+  fill: #4c515a;
+  margin-right: 15px;
+  stroke: none;
+}
+
+.sidebar-pages:hover {
+  background-color: #efefef;
+}
+
+.div-16 {
+  display: flex;
+  justify-content: space-between;
+  gap: 0px;
+}
+.div-17 {
+  background-color: #fafafa;
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 0%;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px 0;
+}
+.sidebar-button-active {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400; /* Font weight */
+  font-size: 12px; /* Font size */
+  color: #1677ff;
+  border-right: 4px solid #1677ff;
+  border-left: none;
+  border-bottom: none;
+  background-color: #e6f4ff;
+  width: 100%;
+  border-top: none;
+  justify-content: flex-start; /* Change to flex-start for left alignment */
+  align-items: center;
+  padding: 12px 50px;
+  text-align: left; /* Align text to the left */
+}
+@media (max-width: 991px) {
+  .sidebar-button-active {
+    padding: 0 20px;
+  }
+}
+
+.sidebar-button {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400; /* Font weight */
+  font-size: 12px; /* Font size */
+  color: #4c515a;
+  border: none;
+  width: 100%;
+  background-color: #fafafa;
+  justify-content: flex-start; /* Change to flex-start for left alignment */
+  align-items: center; /* Adjust as needed */
+  padding: 12px 50px;
+  text-align: left; /* Align text to the left */
+}
+@media (max-width: 991px) {
+  .sidebar-button {
+    padding: 0 20px;
+  }
+}
+
+.sidebar-button:hover {
+  background-color: #efefef;
+  width: 100%;
+}
+
+.div-23 {
+  background-color: #fff;
+  display: flex;
+  width: 100%;
+  padding-top: 17px;
+  flex-direction: column;
+}
+.div-24 {
+  align-self: start;
+  display: flex;
+  margin-left: 30px;
+  gap: 10px;
+}
+@media (max-width: 991px) {
+  .div-24 {
+    margin-left: 10px;
+  }
+}
+.img-6 {
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  width: 15px;
+}
+.div-25 {
+  color: #4c515a;
+}
+.div-26 {
+  background-color: rgba(204, 204, 204, 0.46);
+  display: flex;
+  margin-top: 17px;
+  height: 1px;
+  flex-direction: column;
+}
+.div-27 {
+  align-self: start;
+  display: flex;
+  gap: 13px;
+  margin: 12px 0 0 30px;
+}
+@media (max-width: 991px) {
+  .div-27 {
+    margin-left: 10px;
+  }
+}
+.img-7 {
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  width: 14px;
+}
+.div-28 {
+  color: #4c515a;
+}
+.column-2 {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 80%;
+  margin-left: 20px;
+}
+@media (max-width: 991px) {
+  .column-2 {
+    width: 100%;
+  }
+}
+.div-29 {
+  background-color: #020101;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  width: 100%;
+}
+@media (max-width: 991px) {
+  .div-29 {
+    max-width: 100%;
+  }
+}
+.div-30 {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 19px 80px 19px 30px;
+}
+@media (max-width: 991px) {
+  .div-30 {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+}

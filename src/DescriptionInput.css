@@ -1,0 +1,37 @@
+.modal-box {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400; /* Font weight */
+  font-size: 12px; /* Font size */
+  width: 80%;
+  margin-left: 20%;
+}
+
+.job-description {
+  border-radius: 5px;
+  padding: 7px 0px 7px 10px;
+  margin-bottom: 10px;
+  border: 1px solid #cccccc80;
+}
+
+.job-description:hover,
+.job-description:focus,
+.description-modal:hover,
+.description-modal:focus {
+  border: 1px solid #1677ff;
+}
+
+.description-modal {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  width: 100%;
+  border-radius: 5px;
+  height: 240px;
+  resize: none;
+  border: 1px solid #cccccc80;
+  padding: 15px;
+}
+
+.submitbutton.description {
+  width: 30%;
+  margin-left: 35%;
+  margin-right: 35%;
+}

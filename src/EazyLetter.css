@@ -1,0 +1,181 @@
+.eazyletter {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400; /* Font weight */
+  font-size: 12px; /* Font size */
+  width: 76%;
+  margin-left: 24%;
+  background-color: #f7f7f8;
+}
+
+.page-heading {
+  width: 90%;
+  margin: 80px 5% 0% 5%;
+}
+.block-form {
+  padding: 3% 5% 0% 5%;
+  background-color: #f7f7f8;
+}
+
+.eazyletter-wrapper {
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+.eazyletter-form {
+  border-radius: 20px 20px 0px 0px;
+  align-self: start;
+  display: flex;
+  align-items: start;
+  padding: 20px 60px 10px 60px;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: white;
+  border-bottom: 1px solid #cccccc50;
+}
+@media (max-width: 991px) {
+  .eazyletter-form {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+.eazyletter-input {
+  border-radius: 5px;
+  padding: 7px 0px 7px 10px;
+  width: 25%;
+  margin-bottom: 10px;
+  border: 1px solid #cccccc80;
+}
+
+.eazyletter-input:hover,
+.eazyletter-input:focus,
+.parameters-input:hover,
+.parameters-input-focus {
+  border: 1px solid #1677ff;
+}
+
+.eazyletter-button {
+  padding: 8px 15px 8px 15px;
+  border: none;
+  width: 20%;
+  border-radius: 5px;
+  color: white;
+  background-color: #0983fe;
+}
+
+.eazyletter-button:hover {
+  background-color: #4096ff;
+}
+
+.coverletter {
+  border-radius: 0px 0px 20px 20px;
+  display: flex;
+}
+
+.submitbutton {
+  margin-left: 25%;
+  width: 25%;
+}
+
+.generated-letter {
+  width: 100%;
+  padding: 8px 15px 8px 15px;
+  background-color: white;
+  padding: 20px 60px 10px 60px;
+  border-radius: 0px 0px 0px 20px;
+}
+
+.parameters {
+  width: 35%;
+  border-left: 1px solid #cccccc75;
+  background-color: white;
+  padding: 15px 45px 10px 35px;
+  border-radius: 0px 0px 20px 0px;
+}
+
+.name-input {
+  font-size: 15px;
+  font-weight: bold;
+  padding: 5px;
+  border: 1px solid white;
+  transition: border-bottom 0.3s ease;
+}
+
+.linkedin-input {
+  font-size: 13px;
+  padding: 5px;
+  width: 100%;
+  border: 1px solid white;
+  transition: border-bottom 0.3s ease;
+}
+
+.details-input {
+  margin-bottom: 5px;
+  font-size: 13px;
+  padding: 5px;
+  width: 20%;
+  border: 1px solid white;
+  transition: border-bottom 0.3s ease;
+}
+
+.name-input:hover,
+.name-input:focus,
+.linkedin-input:hover,
+.linkedin-input:focus,
+.details-input:hover,
+.details-input:focus,
+.coverletter-input:hover,
+.coverletter-input-focus {
+  border-bottom: 1px solid #4096ff;
+  background-color: #4096ff07;
+}
+
+.coverletter-input {
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  resize: none;
+  border-radius: 5px;
+  height: 300px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.hrbar {
+  background-color: #000000;
+  height: 1px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.parameters-input {
+  border-radius: 5px;
+  padding: 7px 0px 7px 10px;
+  margin-bottom: 10px;
+  border: 1px solid #cccccc80;
+  width: 100%;
+}
+
+label {
+  font-weight: bold;
+}
+
+.parameters-input.description {
+  width: 100%;
+  resize: none;
+  height: 150px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.eazyletter-button.generate {
+  align-content: center;
+  justify-content: center;
+  width: 80%;
+  margin: 10%;
+  align-items: center;
+}
+
+.eazyletter-button.generate svg {
+  margin-right: 10px;
+  vertical-align: middle;
+}

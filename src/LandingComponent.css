@@ -1,0 +1,41 @@
+.landing-container {
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 60px;
+  padding: 3% 10% 3% 10%;
+}
+
+.video-column {
+  width: 80%;
+}
+
+.text-column {
+  width: 100%;
+}
+
+.intro-title {
+  font-size: 18px;
+  color: #6483f6;
+  padding: 0px;
+  text-transform: uppercase;
+}
+
+.product-title {
+  padding: 0px;
+  color: #000933;
+  line-height: 35px;
+  font-size: 35px;
+}
+
+.product-subtitle {
+  font-weight: 400;
+  color: #000933;
+}
+
+.product-description {
+  font-weight: 300;
+  font-size: 16px;
+  color: #999999;
+}
