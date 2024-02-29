@@ -7,6 +7,10 @@
   display: flex;
 }
 
+.image-slider {
+  background-color: #2a49e5;
+}
+
 .subtitle-landing {
   padding: 40px 0px 0px 40px;
   font-size: 20px;
@@ -43,7 +47,7 @@
 
 .custom-button {
   padding: 10px 20px;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 500;
   border-radius: 10px;
   background-color: #2a49e5;
@@ -57,7 +61,7 @@
 
 .custom-button:hover {
   transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 1px #182a85;
 }
 
 .custom-button:hover::after {
@@ -92,12 +96,47 @@
 
 .landing-2 {
   padding-top: 30px;
-  background-color: white;
+  background-color: #f4f4f5;
 }
 
 .lading-title {
-  padding: 10px 40px 20px 40px;
-  text-align: left;
-  font-size: 25px;
-  font-weight: 500;
+  padding: 40px 40px 20px 40px;
+  margin: 2% 5% 0% 5%;
+  border-radius: 40px;
+  text-align: center;
+  width: 90%;
+  color: #111422;
+  font-size: 28px;
+  font-weight: 650;
+  background-color: white;
+}
+
+.explainer {
+  width: 80%;
+  margin: 0% 10% 0% 10%;
+  padding: 20px;
+  line-height: 25px;
+  font-size: 20px;
+  font-weight: 400;
+  color: #111422;
+}
+
+.highlight {
+  background-color: #d0daff90;
+  padding: 5px;
+  text-decoration: underline;
+  color: #2a49e5;
+}
+
+.title-highlight {
+  color: #2a49e5;
+}
+
+.product-type {
+  padding: 80px 0px 0px 0px;
+  text-align: center;
+  font-size: 20px;
+  color: #3550d5;
+  text-transform: uppercase;
+  font-weight: 650;
 }

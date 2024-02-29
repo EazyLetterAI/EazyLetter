@@ -1,0 +1,40 @@
+.audio-player1 {
+  margin: 10% 10% 0% 40%;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%; /* Make it round */
+  background-color: #f5ac35;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 15px solid #f6b753;
+  transition: transform 0.2s ease-in-out; /* Add transition for smooth zoom */
+}
+
+.audio-player1:hover {
+  transform: scale(1.1); /* Zoom effect on hover */
+}
+
+.play-button {
+  background-color: #f5ac35;
+  color: white;
+  font-weight: 600;
+  font-size: 25px;
+  height: 200px;
+  width: 200px;
+  border: none;
+  border-radius: 50%; /* Make it round */
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.play-button.playing {
+  transform: scale(1.1); /* Zoom effect on hover */
+}
+
+.play-button svg {
+  width: 50px; /* Adjust SVG size */
+  height: 50px;
+}

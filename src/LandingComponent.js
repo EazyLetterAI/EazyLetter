@@ -1,5 +1,6 @@
 import React from "react";
 import "./LandingComponent.css"; // Import your CSS file
+import AudioPlayer from "./AudioPlayer"; // Import your AudioPlayer component
 
 function LandingComponent({
   productintro,
@@ -8,25 +9,30 @@ function LandingComponent({
   procutdescription,
   videoUrl,
   videoOnLeft = true,
+  audio = true,
   backgroundColor,
   buttonmessage,
 }) {
   const containerStyle = {
     backgroundColor: backgroundColor,
   };
+
   return (
     <div className="landing-container" style={containerStyle}>
       {videoOnLeft ? (
         <>
           <div className="video-column">
-            <iframe
-              src={videoUrl}
-              title="Video Frame"
-              width="560"
-              height="350"
-              frameborder="0"
-              allowfullscreen
-            ></iframe>
+            {audio ? (
+              <AudioPlayer audioSrc={videoUrl} />
+            ) : (
+              <iframe
+                src={videoUrl}
+                title="Video Frame"
+                width="460"
+                height="315"
+                allowFullScreen
+              ></iframe>
+            )}
           </div>
           <div className="text-column">
             <h1 className="intro-title">{productintro}</h1>
@@ -46,14 +52,17 @@ function LandingComponent({
             <button className="custom-button">{buttonmessage}</button>
           </div>
           <div className="video-column">
-            <iframe
-              src={videoUrl}
-              title="Video Frame"
-              width="560"
-              height="315"
-              frameborder="0"
-              allowfullscreen
-            ></iframe>
+            {audio ? (
+              <AudioPlayer audioSrc={videoUrl} />
+            ) : (
+              <iframe
+                src={videoUrl}
+                title="Video Frame"
+                width="460"
+                height="315"
+                allowFullScreen
+              ></iframe>
+            )}
           </div>
         </>
       )}
