@@ -8,11 +8,17 @@
  */
 
 import { initTRPC, TRPCError } from "@trpc/server";
+import OpenAI from "openai";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { getServerAuthSession } from "~/server/auth";
+import { env } from "~/env";
 import { db } from "~/server/db";
+
+const openai = new OpenAI({
+  apiKey: env.OPENAI_API_KEY,
+});
 
 /**
  * 1. CONTEXT
@@ -31,6 +37,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
 
   return {
     db,
+    openai,
     session,
     ...opts,
   };
