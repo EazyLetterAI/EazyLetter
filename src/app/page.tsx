@@ -70,40 +70,6 @@ async function CrudShowcase() {
 
   const latestPost = await api.post.getLatest.query();
 
-  // fill out an example applicant info
-  const gptLetter = await api.ai.generateLetter.query({
-    company: {
-      name: "Acme Corp",
-      address: "123 Main St",
-      description: "We make widgets",
-    },
-    job: {
-      title: "Software Engineer",
-      start: new Date(),
-      end: new Date(),
-      description: "We need someone to make widgets",
-    },
-    applicant: {
-      name: "John Doe",
-      experiences: [
-        {
-          type: "education",
-          start: new Date(),
-          end: new Date(),
-          title: "BS in Computer Science",
-          description: "I learned how to make widgets",
-        },
-        {
-          type: "work",
-          start: new Date(),
-          end: new Date(),
-          title: "Software Engineer",
-          description: "I made widgets",
-        },
-      ],
-    },
-  })
-
   return (
     <div className="w-full max-w-xs">
       {latestPost ? (
@@ -113,8 +79,6 @@ async function CrudShowcase() {
       )}
 
       <CreatePost />
-
-      <h1>{gptLetter.response}</h1>
     </div>
   );
 }

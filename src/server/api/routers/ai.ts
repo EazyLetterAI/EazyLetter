@@ -5,6 +5,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+import { users } from "~/server/db/schema";
 
 export const openAIRouter = createTRPCRouter({
   generateLetter: protectedProcedure
