@@ -1,5 +1,6 @@
 import { postRouter } from "~/server/api/routers/post";
 import { openAIRouter } from "~/server/api/routers/ai";
+import { letterRouter } from "~/server/api/routers/letter";
 import { createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -9,7 +10,8 @@ import { createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   post: postRouter,
-  ai: openAIRouter
+  ai: openAIRouter,
+  letter: letterRouter,
 });
 
 // export type definition of API
