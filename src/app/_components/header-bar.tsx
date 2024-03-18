@@ -15,24 +15,14 @@ export function HeaderBar() {
         </Link>
       </div>
       <div className="navbar">
-        <ul className="hidden md:flex justify-between items-center space-x-11">
-            <li>
-              <Link href="/">Features</Link>
-            </li>
-            <li>
-              <Link href="/">Pricing</Link>
-            </li>
-            <li>
-              <Link href="/">About</Link>
-            </li>
-            <li>
-              <Link href="/">Sign Up</Link>
-            </li>
-            <li>
-              <Link href="/">Login</Link>
-            </li>
-
-        </ul>
+        <div className="nav hidden md:flex justify-between items-center space-x-10">
+            <Link href="/">Features</Link>
+            <Link href="/">Pricing</Link>
+            <Link href="/">About</Link>
+            <Link href="/">Sign Up</Link>
+            <Link href="/">Login</Link>
+        </div>
+        
       </div>
     </div>
   );
