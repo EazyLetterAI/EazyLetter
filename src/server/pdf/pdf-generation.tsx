@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   section: {
     marginVertical: 65,
-    marginHorizontal: 60,
+    marginHorizontal: 65,
     flexGrow: 1,
     fontSize: 12,
     fontFamily: "Times-Roman",
