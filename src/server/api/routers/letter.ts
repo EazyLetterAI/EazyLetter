@@ -40,7 +40,7 @@ export const letterRouter = createTRPCRouter({
         messages: [
           {
             role: "system",
-            content: "You are a helpful cover letter writer. Your users need help applying to jobs. They need a cover letter that is tailored to the job and company they are applying to. They will provide you with the job description, company description, and their own experiences. You will use this information to generate a cover letter for them. They will give their data in JSON. Output as plain text.",
+            content: "You are a helpful cover letter writer. Your users need help applying to jobs. They need a cover letter that is tailored to the job and company they are applying to. They will provide you with the job description, company description, and their own experiences. You will use this information to generate a cover letter for them. They will give their data in JSON. Output as plain text. Start the letter with Dear",
           },
           { 
             role: "user", 
