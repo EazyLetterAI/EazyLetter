@@ -2,8 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import Logo from "../../../public/logo.png";
+import { getServerAuthSession } from "~/server/auth";
 
-export function HeaderBar() {
+export async function HeaderBar() {
+  const session = await getServerAuthSession();
+  let isLoggedIn = false;
   return (
     <div className="flex flex-row justify-between w-full h-20 px-4 fixed nav items-center">
       <div className="logo">
@@ -16,13 +19,23 @@ export function HeaderBar() {
       </div>
       <div className="navbar">
         <div className="nav hidden md:flex justify-between items-center space-x-10">
-            <Link href="/">Features</Link>
-            <Link href="/">Pricing</Link>
-            <Link href="/">About</Link>
-            <Link href="/">Sign Up</Link>
-            <Link href="/">Login</Link>
+          {session?.user ? (
+            <>
+              <Link href="/">Account</Link>
+              <Link href="/">Dashboard</Link>
+              <Link href="/">Pricing</Link>
+              <Link href="/">Logout</Link>
+
+            </>
+            ) : (
+            <>
+              <Link href="/">Features</Link>
+              <Link href="/">Pricing</Link>
+              <Link href="/">About</Link>
+              <Link href="/">Login</Link>  
+            </>
+          )}
         </div>
-        
       </div>
     </div>
   );
