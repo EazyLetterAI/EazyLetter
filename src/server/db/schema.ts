@@ -28,7 +28,7 @@ export const users = createTable("user", {
     fsp: 3,
   }).default(sql`CURRENT_TIMESTAMP(3)`),
   image: varchar("image", { length: 255 }),
-  firstname: varchar("firstname", { length: 255 }).notNull().default("First name"),
+  firstname: varchar("name", { length: 255 }).notNull().default("First name"),
   middlename: varchar("middlename", { length: 255 }),
   lastname: varchar("lastname", { length: 255 }).notNull().default("Last name"),
   address: varchar("address", { length: 255 }),
