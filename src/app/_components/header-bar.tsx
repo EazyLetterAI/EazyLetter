@@ -6,37 +6,39 @@ import { getServerAuthSession } from "~/server/auth";
 
 export async function HeaderBar() {
   const session = await getServerAuthSession();
-  let isLoggedIn = false;
   return (
-    <div className="flex flex-row justify-between w-full h-20 px-4 fixed nav items-center">
+    <>
+    <div className="h-16"></div>
+    <div className="nav fixed flex w-full flex-row items-center justify-between px-4 py-2 bg-white shadow-sm">
       <div className="logo">
-        <Link href="/#" className="flex flex-row justify-self-start items-center">
-            <Image src={Logo} width={50} height={50} alt="picture"/>
-            <h1 className="font-sans font-semibold text-4xl">
-            EazyLetter
-            </h1>
+        <Link
+          href="/#"
+          className="flex flex-row items-center justify-self-start"
+        >
+          <Image src={Logo} width={50} height={50} alt="picture" />
+          <h1 className="font-sans text-4xl font-semibold">EazyLetter</h1>
         </Link>
       </div>
       <div className="navbar">
-        <div className="nav hidden md:flex justify-between items-center space-x-10">
+        <div className="nav hidden items-center justify-between space-x-10 md:flex">
           {session?.user ? (
             <>
               <Link href="/">Account</Link>
               <Link href="/">Dashboard</Link>
               <Link href="/">Pricing</Link>
-              <Link href="/">Logout</Link>
-
+              <Link href="/api/auth/signout">Logout</Link>
             </>
-            ) : (
+          ) : (
             <>
               <Link href="/">Features</Link>
               <Link href="/">Pricing</Link>
               <Link href="/">About</Link>
-              <Link href="/">Login</Link>  
+              <Link href="/api/auth/signin">Login</Link>
             </>
           )}
         </div>
       </div>
     </div>
+    </>
   );
 }
