@@ -7,8 +7,7 @@ import {
   primaryKey,
   text,
   timestamp,
-  varchar,
-  unique
+  varchar
 } from "drizzle-orm/mysql-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
@@ -57,7 +56,7 @@ export const userExperiences = createTable("userExperience", {
   location: varchar("location", { length: 255 }),
   startDate: date("startDate").notNull(),
   endDate: date("endDate"), 
-  Descriptions: varchar("descriptions", { length: 255 }),            
+  descriptions: varchar("descriptions", { length: 255 }),            
   type: varchar("type", { length: 255 }).notNull(),
   link: varchar("link", { length: 255}),  // link related to that experience, can be a website, github repo, etc.
 });
