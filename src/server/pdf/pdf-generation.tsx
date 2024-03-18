@@ -9,20 +9,21 @@ import ReactPDF, {
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
-    backgroundColor: "#E4E4E4",
+    backgroundColor: "#FFFFFF",
   },
   section: {
-    margin: 10,
-    padding: 10,
+    marginVertical: 65,
+    marginHorizontal: 60,
     flexGrow: 1,
     fontSize: 12,
+    fontFamily: "Times-Roman",
   },
 });
 
 export async function GenerateCoverLetter(letterContents: string) {
   const CoverLetter = () => (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page wrap style={styles.page}>
         <View style={styles.section}>
           <Text>{letterContents}</Text>
         </View>
@@ -30,7 +31,7 @@ export async function GenerateCoverLetter(letterContents: string) {
     </Document>
   );
 
-  const stream = await ReactPDF.renderToStream(<CoverLetter />);
+const stream = await ReactPDF.renderToStream(<CoverLetter />);
   return new Promise<Buffer>(function(resolve, reject) {
     const buffers: Buffer[] = []
     stream.on('data', (data: Buffer) => {
