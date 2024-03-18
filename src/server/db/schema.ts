@@ -2,6 +2,7 @@ import { relations, sql } from "drizzle-orm";
 import {
   index,
   int,
+  date,
   mysqlTableCreator,
   primaryKey,
   text,
@@ -27,9 +28,9 @@ export const users = createTable("user", {
     fsp: 3,
   }).default(sql`CURRENT_TIMESTAMP(3)`),
   image: varchar("image", { length: 255 }),
-  firstname: varchar("firstname", { length: 255 }).notNull(),
+  firstname: varchar("firstname", { length: 255 }).notNull().default("First name"),
   middlename: varchar("middlename", { length: 255 }),
-  lastname: varchar("lastname", { length: 255 }).notNull(),
+  lastname: varchar("lastname", { length: 255 }).notNull().default("Last name"),
   address: varchar("address", { length: 255 }),
   phone: varchar("phone", { length: 255 }),
 });
@@ -37,16 +38,56 @@ export const users = createTable("user", {
 export const userLinks = createTable("userLink", {
   userId: varchar("userId", { length: 255 }).notNull()
     .references(() => users.id),
-  type: varchar("type", { length: 255 }).notNull().primaryKey(),
+  type: varchar("type", { length: 255 }).notNull(),
   link: varchar("link", { length: 255 }).notNull(),
 }, (userLink) => ({
-    userIdIdx: index("userLink_userId_idx").on(userLink.userId),
-    unq: unique().on(userLink.userId, userLink.link),
+  primaryKey: primaryKey({columns: [userLink.userId, userLink.type]}),
+  userIdIdx: index("userLink_userId_idx").on(userLink.userId),
 }));
 
 export const userLinksRelations = relations(userLinks, ({ one }) => ({
   user: one(users, { fields: [userLinks.userId], references: [users.id] }),
 }));
+
+export const userExperiences = createTable("userExperience", {
+  userId: varchar("userId", { length: 255 }).notNull()
+    .references(() => users.id),
+  experienceName: varchar("experienceName", { length: 255 }).notNull(),
+  title: varchar("title", { length: 255 }),
+  location: varchar("location", { length: 255 }),
+  startDate: date("startDate").notNull(),
+  endDate: date("endDate"), 
+  Descriptions: varchar("descriptions", { length: 255 }),            
+  type: varchar("type", { length: 255 }).notNull(),
+  link: varchar("link", { length: 255}),  // link related to that experience, can be a website, github repo, etc.
+});
+
+export const experienceRelations = relations(userExperiences, ({ one }) => ({
+  user: one(users, { fields: [userExperiences.userId], references: [users.id] }),
+}));
+
+export const education = createTable("education", {
+  userId: varchar("userId", { length: 255 }).notNull()
+    .references(() => users.id),
+  schoolName: varchar("schoolName", { length: 255 }).notNull(),
+  location: varchar("location", { length: 255 }),
+  startDate: date("startDate").notNull(),
+  endDate: date("endDate").notNull(),
+  gpa: varchar("gpa", { length: 255 }),
+  degree: varchar("degree", { length: 255 }),
+  honors: varchar("honors", { length: 255 }),
+  relevantCoursework: varchar("relevantCoursework", { length: 255 }),
+});
+
+export const educationRelations = relations(education, ({ one }) => ({
+  user: one(users, { fields: [education.userId], references: [users.id] }),
+}));
+
+export const skills = createTable("skills", {
+  userId: varchar("userId", { length: 255 }).notNull()
+    .references(() => users.id),
+  skills: varchar("skills", { length: 255 }),
+})
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
