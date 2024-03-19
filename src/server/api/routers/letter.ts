@@ -28,9 +28,12 @@ export const letterRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       // If the jobDetails is a URL, fetch the text from the site
       let jobDetails = input.jobDetails;
-      if (z.string().url().safeParse(input.jobDetails)) {
-        const jobSiteText = await api.letter.retrieveSiteText.query(input.jobDetails);
+      try {
+        const url = z.string().url().parse(input.jobDetails);
+        const jobSiteText = await api.letter.retrieveSiteText.query(url);
         jobDetails = jobSiteText?.text ?? "";
+      } catch {
+        // If the jobDetails is not a URL, it is a string
       }
       if (!jobDetails)
         throw new TRPCError({ code: "BAD_REQUEST", message: "Failed to fetch job details" });
@@ -40,7 +43,11 @@ export const letterRouter = createTRPCRouter({
         messages: [
           {
             role: "system",
-            content: "You are a helpful cover letter writer. Your users need help applying to jobs. They need a cover letter that is tailored to the job and company they are applying to. They will provide you with the job description, company description, and their own experiences. You will use this information to generate a cover letter for them. They will give their data in JSON. Output as plain text. Start the letter with Dear",
+            content: `You are a helpful cover letter writer. Your users need help applying to jobs. 
+            They need a cover letter that is tailored to the job and company they are applying to. 
+            They will provide you with the job description, company description, and their own experiences. 
+            You will use this information to generate a cover letter for them. They will give their data in JSON. 
+            Output as plain text. Start the letter with Dear. End the letter with Sincerely.`,
           },
           { 
             role: "user", 
