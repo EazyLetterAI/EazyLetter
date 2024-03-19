@@ -91,7 +91,7 @@ export default function GenerateLetter() {
           <button
             onClick={generateLetter}
             disabled={res.isFetching}
-            className="rounded-lg px-2 font-bold text-white outline outline-white duration-300 ease-in-out hover:bg-white hover:text-blue-500"
+            className={`rounded-lg px-2 font-bold text-white outline outline-white duration-300 ease-in-out` + (!res.isFetching ? ` hover:bg-white hover:text-blue-500` : ``)}
           >
             Generate Letter
           </button>
@@ -105,7 +105,7 @@ export default function GenerateLetter() {
           )}
         </div>
       </div>
-      <div className="w-screen space-y-2 bg-white rounded-lg p-2 px-8 text-sm sm:w-3/5 sm:p-4 sm:mt-8">
+      <div className={`w-screen space-y-2 bg-white rounded-lg p-2 px-8 text-sm sm:w-3/5 sm:p-4 sm:mt-8` + (res.data == undefined ? ` h-4/5` : ``)}>
         {res.data?.letter
           ?.split("\n\n")
           .map((p, i) => p.trim().length > 0 && <p key={i}>{p.trim()}</p>)}
