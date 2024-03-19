@@ -2,16 +2,11 @@ import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
 
 import { HeaderBar } from "~/app/_components/header-bar";
-import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
-import { EditUserInfo } from "./_components/edit-info";
 
 export default async function Home() {
   return (
-    <main className=".">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-        
-        <div className="flex">
+    <main>
+      <div className="flex">
         <HeaderBar />
       </div>
       <div className="flex min-h-screen flex-col items-center justify-center text-black"> 
@@ -32,18 +27,6 @@ export default async function Home() {
                 database and authentication.
               </div>
             </Link>
-        
-        <EditUserInfo/>
-
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-2xl text-white">
-            {hello ? hello.greeting : "Loading tRPC query..."}
-          </p>
-
-          <div className="flex flex-col items-center justify-center gap-4">
-            <p className="text-center text-2xl text-white">
-              {session && <span>Logged in as {session.user?.name}</span>}
-            </p>
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
               href="https://create.t3.gg/en/introduction"
