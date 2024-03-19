@@ -9,7 +9,7 @@ export async function HeaderBar() {
   return (
     <>
     <div className="h-16"></div>
-    <div className="nav fixed top-0 flex w-full flex-row items-center justify-between px-4 py-2 bg-white shadow-sm">
+    <div className="nav fixed top-0 flex w-full flex-row items-center justify-between px-4 py-2 bg-white shadow-sm z-50">
       <div className="logo">
         <Link
           href="/#"
