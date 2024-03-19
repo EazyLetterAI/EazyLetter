@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-    @apply bg-orange-50 text-black;
+    @apply bg-sky-50 text-black;
 }
