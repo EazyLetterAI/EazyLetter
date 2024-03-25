@@ -5,25 +5,18 @@ import { api } from "~/trpc/react";
 import { saveAs } from "file-saver";
 
 export default function GenerateLetter() {
-  const jobDetailsRef = useRef<HTMLTextAreaElement>(null);
-  const applicantInfoRef = useRef<HTMLTextAreaElement>(null);
-
-  const [queryDetails, setQueryDetails] = useState({
-    jobDetails: "",
-    applicantInfo: "",
-  });
+  const [jobDetails, setJobDetails] = useState("");
+  const [applicantInfo, setApplicantInfo] = useState("");
 
   const [generatePdf, setGeneratePdf] = useState(false);
 
   const res = api.letter.generateLetter.useQuery(
     {
-      jobDetails: queryDetails.jobDetails,
-      applicantInfo: queryDetails.applicantInfo,
+      jobDetails: jobDetails,
+      applicantInfo: applicantInfo,
     },
     {
-      enabled:
-        queryDetails.jobDetails.length > 0 &&
-        queryDetails.applicantInfo.length > 0,
+      enabled: false,
       staleTime: Infinity,
       cacheTime: Infinity,
       retry: false,
@@ -55,15 +48,14 @@ export default function GenerateLetter() {
   }
 
   const generateLetter = async () => {
-    setQueryDetails({
-      jobDetails: jobDetailsRef.current?.value ?? "",
-      applicantInfo: applicantInfoRef.current?.value ?? "",
-    });
+    await res.refetch();
   };
 
   const downloadPDF = async () => {
     setGeneratePdf(true);
   };
+
+  const emptyFields = jobDetails.length === 0 || applicantInfo.length === 0;
 
   return (
     <div className="h-screen">
@@ -75,23 +67,23 @@ export default function GenerateLetter() {
           Job Details
         </label>
         <textarea
-          ref={jobDetailsRef}
           placeholder="Enter job details, or paste a link to the job posting"
           className="bg-transparent text-white placeholder-slate-200 outline-none"
+          onChange={(e) => setJobDetails(e.target.value)}
         />
         <label htmlFor="applicantInfo" className="font-bold text-white">
           Applicant Info
         </label>
         <textarea
-          ref={applicantInfoRef}
           placeholder="Enter your resume info"
           className="flex-grow bg-transparent text-white placeholder-slate-200 outline-none"
+          onChange={(e) => setApplicantInfo(e.target.value)}
         />
         <div className="flex justify-center space-x-5">
           <button
             onClick={generateLetter}
-            disabled={res.isFetching}
-            className={`rounded-lg px-2 font-bold text-white outline outline-white duration-300 ease-in-out` + (!res.isFetching ? ` hover:bg-white hover:text-blue-500` : ``)}
+            disabled={emptyFields || res.isFetching}
+            className={`rounded-lg px-2 font-bold text-white outline-white duration-300 ease-in-out` + (!(emptyFields || res.isFetching) ? ` hover:bg-white hover:text-blue-500` : ``) + (!emptyFields ? ` outline` : ``)}
           >
             Generate Letter
           </button>
