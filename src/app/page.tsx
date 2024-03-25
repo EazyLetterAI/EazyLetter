@@ -1,13 +1,17 @@
 import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
+import { getServerAuthSession } from "~/server/auth";
+
 
 import { HeaderBar } from "~/app/_components/header-bar";
 
 export default async function Home() {
+  const session =  await getServerAuthSession();
+
   return (
     <main>
       <div className="flex">
-        <HeaderBar />
+        <HeaderBar session={ session }/>
       </div>
       <div className="flex min-h-screen flex-col items-center justify-center text-black"> 
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
