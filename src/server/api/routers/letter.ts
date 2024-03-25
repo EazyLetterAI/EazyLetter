@@ -47,7 +47,8 @@ export const letterRouter = createTRPCRouter({
             They need a cover letter that is tailored to the job and company they are applying to. 
             They will provide you with the job description, company description, and their own experiences. 
             You will use this information to generate a cover letter for them. They will give their data in JSON. 
-            Output as plain text. Start the letter with Dear. End the letter with Sincerely.`,
+            Output as plain text. Start the letter with Dear. End the letter with Sincerely.
+            If you are not provided with enough company or applicant information, simply make the letter generic. Do not acknowledge the lack of information in the letter.`,
           },
           { 
             role: "user", 
