@@ -1,10 +1,13 @@
+// "use client";
 import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import Logo from "../../../public/logo.png";
 import { getServerAuthSession } from "~/server/auth";
+  
 
 export async function HeaderBar() {
+  const [isOpen, setIsOpen] = useState(false);
   const session = await getServerAuthSession();
   return (
     <>
@@ -20,7 +23,7 @@ export async function HeaderBar() {
         </Link>
       </div>
       <div className="navbar">
-        <div className="nav hidden items-center justify-between space-x-10 md:flex">
+        <div className="nav hidden md:flex items-center justify-between space-x-10 ">
           {session?.user ? (
             <>
               <Link href="/">Account</Link>
@@ -36,6 +39,14 @@ export async function HeaderBar() {
               <Link href="/api/auth/signin">Login</Link>
             </>
           )}
+        </div>
+        <div className="md:hidden flex items-center">
+          <button 
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}> 
+          </button>
+
         </div>
       </div>
     </div>
