@@ -74,7 +74,10 @@ export function EditUserInfo() {
     }
 
     const addEducation = () => {
-        setUserEducation([...userEducation, educationInfo]);
+        setUserEducation([
+            ...userEducation, 
+            {...educationInfo, startDate: new Date(), endDate: new Date() } 
+        ]);
     }
 
     const changeEducationInfo = (index: number, key: string, value: string | Date) => {
@@ -85,6 +88,12 @@ export function EditUserInfo() {
             newEducationList[index] = newEducation;
             setUserEducation(newEducationList);
         }
+    }
+
+    const removeEducation = (index: number) => {
+        const updatedEducation = [...userEducation];
+        updatedEducation.splice(index, 1); // Remove the education entry
+        setUserEducation(updatedEducation);
     }
 
     return (
@@ -107,6 +116,7 @@ export function EditUserInfo() {
                     <input type="text" placeholder="Degree" value={education.degree ?? ""} onChange={(e) => changeEducationInfo(index, "degree", e.target.value)} />
                     <input type="text" placeholder="Honors" value={education.honors ?? ""} onChange={(e) => changeEducationInfo(index, "honors", e.target.value)} />
                     <input type="text" placeholder="Relevant Coursework" value={education.relevantCoursework ?? ""} onChange={(e) => changeEducationInfo(index, "relevantCoursework", e.target.value)} />
+                    <button className="bg-red-500 text-white" onClick={() => removeEducation(index)} > Remove </button>
                 </div>
             ))}
             <button className="bg-white" onClick={() => {addEducation()}}>+</button>
