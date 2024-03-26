@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import Logo from "../../../public/logo.png";
-import burgerMenu from "../../../public/burger-menu.svg";
 import { Session } from "next-auth";
-
+import { RxHamburgerMenu } from "react-icons/rx";
+import { IoClose } from "react-icons/io5";
 
 export function HeaderBar(props: {session: Session}) {
   const session = props.session;
@@ -50,9 +50,11 @@ export function HeaderBar(props: {session: Session}) {
                 setIsOpen(!isOpen);
                 console.log(isOpen);
               }}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              </svg>
+                {isOpen ? 
+                  <IoClose className="size-9"/> 
+                : 
+                  <RxHamburgerMenu className="size-9"/>
+                }
 
 
             </button>
