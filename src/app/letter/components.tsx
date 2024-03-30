@@ -19,7 +19,7 @@ const PDFViewer = dynamic(
 export default function GenerateLetter() {
   const [jobDetails, setJobDetails] = useState("");
   const [applicantInfo, setApplicantInfo] = useState("");
-  const [letterEditorValue, setEditorValue] = useState(new Delta([]));
+  const [letterEditorValue, setEditorValue] = useState<Delta>();
 
   const res = api.ai.generateLetter.useQuery(
     {

@@ -22,22 +22,15 @@ const styles = StyleSheet.create({
 });
 
 function parseDelta(delta: Delta) {
-  console.log(delta);
-  if (!delta) {
-    return;
-  }
-
-  const elements = [];
+  const elements: React.JSX.Element[] = [];
 
   delta.eachLine((line, attributes) => {
-    const lineElements = [];
+    const lineElements: React.JSX.Element[] = [];
     line.forEach((op) => {
       lineElements.push(<Text>{op.insert}</Text>);
     });
     elements.push(<View>{lineElements}</View>);
   });
-
-  console.log(elements);
 
   return elements;
 }
