@@ -1,5 +1,6 @@
 import { openAIRouter } from "~/server/api/routers/ai";
-import { letterRouter } from "~/server/api/routers/letter";
+import { pdfRouter } from "~/server/api/routers/generate-pdf";
+import { scrapingRouter } from "~/server/api/routers/scrape";
 import { createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -9,7 +10,8 @@ import { createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   ai: openAIRouter,
-  letter: letterRouter,
+  pdf: pdfRouter,
+  scraping: scrapingRouter
 });
 
 // export type definition of API
