@@ -11,7 +11,11 @@ export default async function Home() {
   return (
     <main>
       <div className="flex">
-        <HeaderBar session={ session }/>
+        <HeaderBar session = { session }/>
+      </div>
+      <div className = "flex-col">
+        
+
       </div>
     </main>
   );
