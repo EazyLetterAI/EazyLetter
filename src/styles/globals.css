@@ -5,3 +5,11 @@
 body {
     @apply bg-sky-50 text-black;
 }
+
+.ql-single-line .ql-editor {
+    @apply py-1;
+}
+
+.ql-snow.ql-toolbar button.ql-generateLetter {
+    @apply w-fit;
+}
