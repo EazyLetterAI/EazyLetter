@@ -7,11 +7,7 @@ import {
   StyleSheet,
 } from "@react-pdf/renderer";
 import type { Style } from "@react-pdf/types";
-import { Quill } from "react-quill";
-import type { Delta as DeltaType } from "quill";
-
-const Delta = Quill.import("delta") as typeof DeltaType;
-type Delta = DeltaType;
+import type { Delta } from "quill";
 
 Font.register({
   family: "Roboto",
@@ -48,17 +44,26 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
   },
-  section: {
+  main: {
     marginVertical: 65,
     marginHorizontal: 65,
     flexGrow: 1,
     fontSize: 12,
   },
+  contactInfo: {
+    top: 10,
+    right: 10,
+    textAlign: "right",
+  }
 });
 
 const whitespacePrefix = <Text style={{fontSize: 1, color: styles.page.backgroundColor}}>.</Text>
 
-function parseDelta(delta: Delta) {
+function parseDelta(delta: Delta | undefined) {
+  if (!delta) {
+    return [];
+  }
+
   const elements: React.JSX.Element[] = [];
 
   // This context is necessary for handling list items
@@ -114,12 +119,30 @@ function parseDelta(delta: Delta) {
   return elements;
 }
 
-export function CoverLetter(props: {letterContents: Delta}) {
+export function CoverLetter(props: {
+  letterContents: Delta | string | undefined;
+  name: Delta | string | undefined;
+  email: Delta | string | undefined;
+  phone: Delta | string | undefined;
+}) {
+  const output = (contents: Delta | string | undefined) => {
+    if (typeof contents === "string") {
+      return <Text>{contents}</Text>;
+    } else {
+      return parseDelta(contents);
+    }
+  };
+
   return (
     <Document>
       <Page wrap style={styles.page}>
-        <View style={styles.section}>
-          {parseDelta(props.letterContents)}
+        <View style={styles.main}>
+          {output(props.letterContents)}
+        </View>
+        <View style={styles.contactInfo}>
+          {output(props.name)}
+          {output(props.email)}
+          {output(props.phone)}
         </View>
       </Page>
     </Document>

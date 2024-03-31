@@ -4,13 +4,10 @@ import dynamic from "next/dynamic";
 import React, { useCallback, useRef, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import type ReactQuill from "react-quill";
-import { Quill, type Range, type UnprivilegedEditor } from "react-quill";
-import type { Delta as DeltaType, Sources, StringMap } from "quill";
+import { type Range, type UnprivilegedEditor } from "react-quill";
+import type { Delta, Sources, StringMap } from "quill";
 
-const Delta = Quill.import("delta") as typeof DeltaType;
-type Delta = DeltaType;
-
-const QuillDynamicWrapper = dynamic(() => import("../rich-text/quill-dynamic"), {
+const ReactQuillDynamic = dynamic(() => import("../rich-text/quill-dynamic"), {
   ssr: false,
   loading: () => (
     <textarea className="resize-none border border-black p-1 italic text-gray-500" value="Loading..." readOnly/>
@@ -34,11 +31,15 @@ const toolbarOptions = [
   ["clean"], // remove formatting button
 ];
 
+export const makeEmptyDelta = (editor: ReactQuill | null) => {
+  return editor?.getEditor().clipboard.convert("");
+};
+
 const Editor = function Editor(props: {
   className?: string;
   placeholder?: string;
   value?: Delta;
-  setValue?: (value: Delta) => void;
+  setValue?: (value: Delta | undefined) => void;
   toolbarId?: string;
   onFocus?: (range: Range, source: Sources, editor: UnprivilegedEditor) => void;
   singleLine?: boolean;
@@ -47,7 +48,8 @@ const Editor = function Editor(props: {
 }) {
   const editorRef = useRef<ReactQuill>(null);
   const effectiveRef = props.editorRef ?? editorRef;
-  const [value, setValue] = useState<Delta>(props.value ?? new Delta());
+
+  const [value, setValue] = useState<Delta | undefined>(props.value ?? makeEmptyDelta(effectiveRef.current));
 
   const generateHandler = props.generateAIHandler;
   const handlerWithEditor = useCallback(() => {
@@ -65,13 +67,13 @@ const Editor = function Editor(props: {
 
   const processValue = (value: Delta) => {
     if (props.singleLine) {
-      let firstLine = new Delta();
+      let firstLine = makeEmptyDelta(effectiveRef.current);
       value.eachLine((line, attributes, idx) => {
         if (idx === 0) {
           line.ops?.forEach((op) => {
-            firstLine = firstLine.insert(op.insert, { ...op.attributes });
+            firstLine = firstLine?.insert(op.insert, { ...op.attributes });
           });
-          firstLine = firstLine.insert("\n", { ...attributes });
+          firstLine = firstLine?.insert("\n", { ...attributes });
         }
       });
       return firstLine;
@@ -81,7 +83,7 @@ const Editor = function Editor(props: {
   };
 
   return (
-    <QuillDynamicWrapper
+    <ReactQuillDynamic
       forwardRef={effectiveRef}
       theme="snow"
       modules={editorModules}
@@ -91,7 +93,7 @@ const Editor = function Editor(props: {
           : value
       }
       onChange={(value, delta, source, editor) => {
-        props.value != undefined && props.setValue != undefined
+        props.setValue != undefined
           ? props.setValue(processValue(editor.getContents()))
           : setValue(processValue(editor.getContents()));
       }}
