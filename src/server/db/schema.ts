@@ -51,7 +51,7 @@ export const userLinksRelations = relations(userLinks, ({ one }) => ({
 export const userExperiences = createTable("userExperience", {
   userId: varchar("userId", { length: 255 }).notNull()
     .references(() => users.id),
-  experienceName: varchar("experienceName", { length: 255 }).notNull(),
+  // experienceName: varchar("experienceName", { length: 255 }).notNull(),
   title: varchar("title", { length: 255 }),
   location: varchar("location", { length: 255 }),
   startDate: date("startDate").notNull(),
