@@ -1,41 +1,57 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React, { useCallback, useRef, useState } from "react";
+import React, { memo, useCallback, useRef, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import type ReactQuill from "react-quill";
 import { type Range, type UnprivilegedEditor } from "react-quill";
 import type { Delta, Sources, StringMap } from "quill";
 
+// For an explanation of some seemingly strange decisions made in dealing with Quill, see https://github.com/zenoamaro/react-quill/issues/962
+
 const ReactQuillDynamic = dynamic(() => import("../rich-text/quill-dynamic"), {
   ssr: false,
   loading: () => (
-    <textarea className="resize-none border border-black p-1 italic text-gray-500" value="Loading..." readOnly/>
+    <textarea className="resize-none italic text-gray-500" value="Loading..." readOnly/>
   ),
 });
 
 const toolbarOptions = [
+  [{ font: [] }],
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
   ["bold", "italic", "underline", "strike"], // toggled buttons
 
   [{ color: [] }, { background: [] }], // dropdown with defaults from theme
 
-  [{ align: [] }],
 
   [{ list: "ordered" }, { list: "bullet" }], // lists
   [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-
-  [{ font: [] }],
+  [{ align: [] }],
 
   ["clean"], // remove formatting button
+];
+
+const enabledFormats = [
+  "font",
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "color",
+  "background",
+  "list",
+  "indent",
+  "align",
+  "link",
 ];
 
 export const makeEmptyDelta = (editor: ReactQuill | null) => {
   return editor?.getEditor().clipboard.convert("");
 };
 
-const Editor = function Editor(props: {
+const Editor = memo(function Editor(props: {
   className?: string;
   placeholder?: string;
   value?: Delta;
@@ -82,27 +98,22 @@ const Editor = function Editor(props: {
     }
   };
 
+  console.log(props.value);
+
   return (
     <ReactQuillDynamic
       forwardRef={effectiveRef}
       theme="snow"
       modules={editorModules}
-      value={
-        props.value != undefined && props.setValue != undefined
-          ? props.value
-          : value
-      }
-      onChange={(value, delta, source, editor) => {
-        props.setValue != undefined
-          ? props.setValue(processValue(editor.getContents()))
-          : setValue(processValue(editor.getContents()));
-      }}
+      formats={enabledFormats}
+      value={ props.value != undefined && props.setValue != undefined ? props.value : value }
+      onChange={(value, delta, source, editor) => { props.setValue != undefined ? props.setValue(processValue(editor.getContents())) : setValue(processValue(editor.getContents())); }}
       onFocus={props.onFocus}
       className={props.className}
       placeholder={props.placeholder}
     />
   );
-};
+});
 
 export default Editor;
 
@@ -110,6 +121,7 @@ export function Toolbar(props: { id: string; className?: string }) {
   return (
     <div id={props.id} className={"ql-toolbar ql-snow " + props.className}> {/* a bit hacky but necessary here */}
       <span className="ql-formats">
+        <select className="ql-font"></select>
         <select className="ql-header" defaultValue="0">
           <option value="1"></option>
           <option value="2"></option>
@@ -132,15 +144,15 @@ export function Toolbar(props: { id: string; className?: string }) {
       </span>
       <span className="ql-formats">
         <select className="ql-align"></select>
-      </span>
-      <span className="ql-formats">
         <button className="ql-list" value="ordered"></button>
         <button className="ql-list" value="bullet"></button>
+      </span>
+      <span className="ql-formats">
         <button className="ql-indent" value="-1"></button>
         <button className="ql-indent" value="+1"></button>
       </span>
       <span className="ql-formats">
-        <select className="ql-font"></select>
+        <button className="ql-link"></button>
       </span>
       <span className="ql-formats">
         <button className="ql-clean"></button>

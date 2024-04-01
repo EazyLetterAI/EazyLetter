@@ -5,8 +5,10 @@ import {
   Text,
   View,
   StyleSheet,
+  Link,
 } from "@react-pdf/renderer";
 import type { Style } from "@react-pdf/types";
+import { propagateServerField } from "next/dist/server/lib/render-server";
 import type { Delta } from "quill";
 
 Font.register({
@@ -41,23 +43,36 @@ Font.register({
 
 const styles = StyleSheet.create({
   page: {
-    flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-  },
-  main: {
-    marginVertical: 65,
-    marginHorizontal: 65,
-    flexGrow: 1,
+    paddingVertical: 65,
+    paddingHorizontal: 65,
+    backgroundColor: "#ffffff",
     fontSize: 12,
-  },
-  contactInfo: {
-    top: 10,
-    right: 10,
-    textAlign: "right",
   }
 });
 
-const whitespacePrefix = <Text style={{fontSize: 1, color: styles.page.backgroundColor}}>.</Text>
+const whitespacePrefix = <Text style={{fontSize: 1, color: styles.page.backgroundColor}}>.</Text>;
+
+const getLineNumberAlpha = (n: number) => {
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  let result = "";
+  while (n >= 0) {
+    result = alphabet.charAt(n % 26) + result;
+    n = Math.floor(n / 26) - 1;
+  }
+  return result;
+}
+
+const getLineNumberRoman = (n: number) => {
+  const roman = [ {m: 1000}, {cm: 900}, {d: 500}, {cd: 400}, {c: 100}, {xc: 90}, {l: 50}, {xl: 40}, {x: 10}, {ix: 9}, {v: 5}, {iv: 4}, {i: 1} ];
+  let str = "";
+  for (const i of roman) {
+    while (n >= Object.values(i)[0]) {
+      str += Object.keys(i)[0];
+      n -= Object.values(i)[0];
+    }
+  }
+  return str;
+}
 
 function parseDelta(delta: Delta | undefined) {
   if (!delta) {
@@ -67,8 +82,8 @@ function parseDelta(delta: Delta | undefined) {
   const elements: React.JSX.Element[] = [];
 
   // This context is necessary for handling list items
-  const listIndents = [];
-  const ordered = false;
+  let listIndents: number[] = [];
+  let listType = "";
 
   // Loop over each line
   delta.eachLine((line, attributes, idx) => {
@@ -92,15 +107,48 @@ function parseDelta(delta: Delta | undefined) {
         color: String(op.attributes?.color),
         backgroundColor: String(op.attributes?.background || "transparent"),
       };
-      
-      lineElements.push(<Text key={i} style={style}>{text}</Text>);
+
+      // For handling links properly
+      const linkStyle: Style = {
+        color: String(op.attributes?.color ?? "blue"),
+        backgroundColor: String(op.attributes?.background || "transparent"),
+      }
+
+      lineElements.push(<Text key={i} style={style}>
+        {op.attributes?.link ? <Link src={String(op.attributes.link)} style={linkStyle}>{text}</Link> : text}
+      </Text>);
     });
 
     // Deal with indents and lists
-    if (attributes?.list) {
+    let indent = 36 * Number(attributes.indent ?? 0);
+    let listPrefix = "";
 
-    } else if (attributes?.indent) {
-      
+    if (!attributes?.list || listType !== attributes.list) {
+      listIndents = [];
+    }
+
+    if (attributes?.list) {
+      indent += 18;
+      listType = String(attributes.list);
+      const lineIndent = Number(attributes.indent ?? 0);  // The indent starts at 0
+      if (listIndents.length <= lineIndent) {
+        listIndents.push(0);
+      } else if (listIndents.length > lineIndent + 1){
+        listIndents = listIndents.slice(0, lineIndent + 1);
+      }
+      listIndents[lineIndent]++;
+      if (listType === "ordered") {
+        console.log(lineIndent);
+        if (lineIndent % 3 === 0) {
+          listPrefix = (listIndents[lineIndent] ?? 0 + 1).toString() + ". ";
+        } else if (lineIndent % 3 === 1) {
+          listPrefix = getLineNumberAlpha(listIndents[lineIndent] ?? 0) + ". ";
+        } else if (lineIndent % 3 === 2) {
+          listPrefix = getLineNumberRoman(listIndents[lineIndent] ?? 0 + 1) + ". ";
+        }
+      } else if (listType === "bullet") {
+        listPrefix = "• ";
+      }
     }
 
     // For some reason, white space at the beginning of a line is not fully rendered
@@ -111,9 +159,10 @@ function parseDelta(delta: Delta | undefined) {
     const style: Style = {
       fontSize: [8, 10, 12, 14, 18, 24][6 - Number(attributes.header) || 2],
       textAlign: attributes.align === "justify" ? "justify" : attributes.align === "center" ? "center" : attributes.align === "right" ? "right" : "left",
+      paddingLeft: indent,
     };
 
-    elements.push(<Text key={idx} style={style}>{lineElements.length ? lineElements : "\n"}</Text>);
+    elements.push(<Text key={idx} style={style}><Text>{listPrefix}</Text>{lineElements.length ? lineElements : "\n"}</Text>);
   });
 
   return elements;
@@ -136,13 +185,13 @@ export function CoverLetter(props: {
   return (
     <Document>
       <Page wrap style={styles.page}>
-        <View style={styles.main}>
+        <View>
           {output(props.letterContents)}
         </View>
-        <View style={styles.contactInfo}>
-          {output(props.name)}
-          {output(props.email)}
-          {output(props.phone)}
+        <View style={{ position: "absolute", top: 10, right: 10 }}>
+          <Text style={{ textAlign: "left" }}>{output(props.name)}</Text>
+          <Text style={{ textAlign: "left" }}>{output(props.email)}</Text>
+          <Text style={{ textAlign: "left" }}>{output(props.phone)}</Text>
         </View>
       </Page>
     </Document>

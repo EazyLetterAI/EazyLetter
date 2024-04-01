@@ -10,7 +10,7 @@ export default function Modal(props: {
 
   return (
     <div
-      className={`fixed inset-0 z-40 ${props.isOpen ? "" : "hidden"}`}
+      className={`fixed inset-0 z-40 transition-opacity duration-150 ${props.isOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
       style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", overflow: "hidden" }}
       onClick={props.onClose}
     >
