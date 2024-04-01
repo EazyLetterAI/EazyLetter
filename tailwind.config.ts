@@ -8,6 +8,12 @@ export default {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
+      backgroundImage: {
+        'gradient-linear': 'linear-gradient(90deg, #406EF7 0%, #C115E9 100%)',
+      },
+      fontWeight: {
+        'extraextrabold': '900',
+      },
     },
   },
   plugins: [],
