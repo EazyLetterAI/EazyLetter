@@ -4,7 +4,7 @@ import Image from "next/image";
 import React from "react";
 import { getServerAuthSession } from "~/server/auth";
 import { SocialIcon } from "react-social-icons"
-import Graphic1 from "../../public/homepage1.png";
+import Graphic1 from "../../public/home-image.png";
 
 
 import { HeaderBar } from "~/app/_components/header-bar";
@@ -56,6 +56,22 @@ export default async function Home() {
           </div>
         </div>
       </div>
+            {/* Pricing */}
+      <div className="PricingSection text-center">
+        <p className="text-fuchsia-500 text-2xl font-medium">Pricing</p>
+        <p className="text-black text-5xl font-medium">Choose your plan</p>
+        <div className="top-0 flex w-full flex-row justify-between">
+          <div className="w-1/2">
+            <p>YOOYOY</p>
+          </div>
+          <div className="w-1/3">
+            <p>YOOYOY</p>
+          </div>
+          <div className="w-1/3">
+            <p>YOOYOY</p>
+          </div>
+        </div>
+      </div>
       {/* <div className="resume">
         <div className="container mx-auto flex flex-col items-center justify-center gap-4 px-4">
           <a
@@ -102,7 +118,11 @@ export default async function Home() {
         </div>
       </div>
     </div>
-      <div className="top-0 flex w-full flex-row justify-between">
+
+    </main>
+  );
+}
+{/* <div className="top-0 flex w-full flex-row justify-between">
         <div className="w-1/2 ">
         <p className="text-4xl font-bold">Your dream job starts<br /><span style={{ color: "#2a49e4" }}> with a great resume</span>.</p>
         <p className="text-gray-600">Create professional resume and cover letters with the help of artificial intelligence and our ATS-compliant templates.</p>
@@ -114,27 +134,5 @@ export default async function Home() {
         <div className="w-1/2">
           <Image src={Graphic1} alt="picture" />
         </div>
-      </div>
-      {/* Pricing */}
-      <div className="PricingSection text-center">
-        <p className="text-fuchsia-500 text-2xl font-medium">Pricing</p>
-        <p className="text-black text-5xl font-medium">Choose your plan</p>
-        <div className="top-0 flex w-full flex-row justify-between">
-          <div className="w-1/2">
-            <p>YOOYOY</p>
-          </div>
-          <div className="w-1/3">
-            <p>YOOYOY</p>
-          </div>
-          <div className="w-1/3">
-            <p>YOOYOY</p>
-          </div>
-        </div>
-      </div>
-
-
-  
-    </main>
-  );
-}
+      </div> */}
 
