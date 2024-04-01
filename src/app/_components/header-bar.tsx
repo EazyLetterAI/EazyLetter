@@ -4,11 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import Logo from "../../../public/logo.png";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
 
-export function HeaderBar(props: {session: Session}) {
+export function HeaderBar(props: {session: Session | null}) {
   const session = props.session;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -27,12 +27,17 @@ export function HeaderBar(props: {session: Session}) {
           </Link>
         </div>
         <div className="navbar">
-          <div className="nav hidden md:flex items-center justify-between space-x-10 ">
+          <div className="nav hidden md:flex items-center justify-between space-x-8">
             {session?.user ? (
               <>
-                <Link href="/">Account</Link>
-                <Link href="/">Dashboard</Link>
+                <Link href="/">Features</Link>
                 <Link href="/">Pricing</Link>
+                <Link href="/">About</Link>
+                <Link href="/dashboard">
+                  <button className="bg-gradient-to-r from-blue-600 to-fuchsia-600 rounded-md py-2 px-6 text-white">
+                    Dashboard
+                  </button>
+                </Link>
                 <Link href="/api/auth/signout">Logout</Link>
               </>
             ) : (
@@ -55,8 +60,6 @@ export function HeaderBar(props: {session: Session}) {
                 : 
                   <RxHamburgerMenu className="size-9"/>
                 }
-
-
             </button>
           </div>
         </div>
