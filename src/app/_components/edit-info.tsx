@@ -271,30 +271,35 @@ export function EditUserInfo() {
         type="text"
         placeholder="Firstname"
         value={userInfo?.firstname}
+        className="bg-transparent text-black"
         onChange={(e) => changeInfoState("firstname", e.target.value)}
       />
       <input
         type="text"
         placeholder="Middlename"
         value={userInfo?.middlename ?? ""}
+        className="bg-transparent text-black"
         onChange={(e) => changeInfoState("middlename", e.target.value)}
       />
       <input
         type="text"
         placeholder="Lastname"
         value={userInfo?.lastname}
+        className="bg-transparent text-black"
         onChange={(e) => changeInfoState("lastname", e.target.value)}
       />
       <input
         type="text"
         placeholder="Address"
         value={userInfo?.address ?? ""}
+        className="bg-transparent text-black"
         onChange={(e) => changeInfoState("address", e.target.value)}
       />
       <input
         type="text"
         placeholder="Phone"
         value={userInfo?.phone ?? ""}
+        className="bg-transparent text-black"
         onChange={(e) => changeInfoState("phone", e.target.value)}
       />
       <h2 className="text-2xl">Education</h2>
@@ -304,6 +309,7 @@ export function EditUserInfo() {
             type="text"
             placeholder="School Name"
             value={education.schoolName}
+            className="bg-transparent text-black"
             onChange={(e) =>
               changeEducationInfo(index, "schoolName", e.target.value)
             }
@@ -312,6 +318,7 @@ export function EditUserInfo() {
             type="text"
             placeholder="Location"
             value={education.location ?? ""}
+            className="bg-transparent text-black"
             onChange={(e) =>
               changeEducationInfo(index, "location", e.target.value)
             }
@@ -320,6 +327,7 @@ export function EditUserInfo() {
             type="date"
             placeholder="Start Date"
             value={formatDate(education.startDate)}
+            className="bg-transparent text-black"
             onChange={(e) =>
               changeEducationInfo(index, "startDate",  new Date(e.target.value))
             }
@@ -328,6 +336,7 @@ export function EditUserInfo() {
             type="date"
             placeholder="End Date"
             value={formatDate(education.endDate)}
+            className="bg-transparent text-black"
             onChange={(e) =>
               changeEducationInfo(index, "endDate",  new Date(e.target.value))
             }
@@ -336,12 +345,14 @@ export function EditUserInfo() {
             type="text"
             placeholder="GPA"
             value={education.gpa ?? ""}
+            className="bg-transparent text-black"
             onChange={(e) => changeEducationInfo(index, "gpa", e.target.value)}
           />
           <input
             type="text"
             placeholder="Degree"
             value={education.degree ?? ""}
+            className="bg-transparent text-black"
             onChange={(e) =>
               changeEducationInfo(index, "degree", e.target.value)
             }
@@ -350,6 +361,7 @@ export function EditUserInfo() {
             type="text"
             placeholder="Honors"
             value={education.honors ?? ""}
+            className="bg-transparent text-black"
             onChange={(e) =>
               changeEducationInfo(index, "honors", e.target.value)
             }
@@ -358,6 +370,7 @@ export function EditUserInfo() {
             type="text"
             placeholder="Relevant Coursework"
             value={education.relevantCoursework ?? ""}
+            className="bg-transparent text-black"
             onChange={(e) =>
               changeEducationInfo(index, "relevantCoursework", e.target.value)
             }
@@ -386,6 +399,7 @@ export function EditUserInfo() {
             type="text"
             placeholder="Title"
             value={experience.title ?? ""}
+            className="bg-transparent text-black"
             onChange={(event) =>
               changeExperienceInfo(index, "title", event.target.value)
             }
@@ -394,6 +408,7 @@ export function EditUserInfo() {
             type="text"
             placeholder="Job Type"
             value={experience.type}
+            className="bg-transparent text-black"
             onChange={(event) =>
               changeExperienceInfo(index, "type", event.target.value)
             }
@@ -402,6 +417,7 @@ export function EditUserInfo() {
             type="text"
             placeholder="Location"
             value={experience.location ?? ""}
+            className="bg-transparent text-black"
             onChange={(event) =>
               changeExperienceInfo(index, "location", event.target.value)
             }
@@ -410,6 +426,7 @@ export function EditUserInfo() {
             type="date"
             placeholder="Start Date"
             value={experience?.startDate?.toISOString().split("T")[0]}
+            className="bg-transparent text-black"
             onChange={(event) =>
               changeEducationInfo(
                 index,
@@ -422,6 +439,7 @@ export function EditUserInfo() {
             type="date"
             placeholder="End Date"
             value={experience?.endDate?.toISOString().split("T")[0]}
+            className="bg-transparent text-black"
             onChange={(event) =>
               changeEducationInfo(
                 index,
@@ -434,6 +452,7 @@ export function EditUserInfo() {
             type="text"
             placeholder="Description"
             value={experience.description ?? ""}
+            className="bg-transparent text-black"
             onChange={(event) =>
               changeExperienceInfo(index, "description", event.target.value)
             }
@@ -442,6 +461,7 @@ export function EditUserInfo() {
             type="text"
             placeholder="Link"
             value={experience.link ?? ""}
+            className="bg-transparent text-black"
             onChange={(event) =>
               changeExperienceInfo(index, "link", event.target.value)
             }
@@ -471,6 +491,7 @@ export function EditUserInfo() {
             type="text"
             placeholder="Enter Skill"
             value={skill.skill ?? ""}
+            className="bg-transparent text-black"
             onChange={(event) =>
               changeSkillsInfo(index, "skill", event.target.value)
             }
@@ -493,6 +514,7 @@ export function EditUserInfo() {
             type="text"
             placeholder="Type"
             value={link.type}
+            className="bg-transparent text-black"
             onChange={(event) =>
               changeLinksInfo(index, "type", event.target.value)
             }
@@ -501,6 +523,7 @@ export function EditUserInfo() {
             type="text"
             placeholder="Link"
             value={link.link}
+            className="bg-transparent text-black"
             onChange={(event) =>
               changeLinksInfo(index, "link", event.target.value)
             }
