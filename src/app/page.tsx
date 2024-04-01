@@ -51,7 +51,7 @@ export default async function Home() {
               </div>
             </Link>
             <Link className="flex flex-col gap-4 rounded-xl bg-white p-4 hover:bg-slate-900 hover:text-white transition-all ease-in-out duration-500"
-              href="/cover" target="_blank">
+              href="/letter" target="_blank">
               <h3 className="text-2xl font-bold text-fuchsia-500">Write my Cover Letter →</h3>
               <div className="text-lg text-inherit">
                 {"Construct a cover letter to land your next interview with our AI. Certified ATS compliant."}

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export default function Modal(props: {
   isOpen: boolean;
   onClose: () => void;
@@ -8,11 +10,13 @@ export default function Modal(props: {
     e.stopPropagation();
   };
 
-  document.onkeydown = (e) => {
-    if (e.key === "Escape" && props.isOpen) {
-      props.onClose();
+  useEffect(() => {
+    document.onkeydown = (e) => {
+      if (e.key === "Escape" && props.isOpen) {
+        props.onClose();
+      }
     }
-  }
+  }, [props]);  // might be some way to remove this dependency, should be harmless here
 
   return (
     <div

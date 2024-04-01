@@ -12,7 +12,7 @@ import { userInfoRouter } from "./routers/user-info";
 export const appRouter = createTRPCRouter({
   ai: openAIRouter,
   pdf: pdfRouter,
-  scraping: scrapingRouter
+  scraping: scrapingRouter,
   userInfo: userInfoRouter
 });
 
