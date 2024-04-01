@@ -140,11 +140,11 @@ function parseDelta(delta: Delta | undefined) {
       if (listType === "ordered") {
         console.log(lineIndent);
         if (lineIndent % 3 === 0) {
-          listPrefix = (listIndents[lineIndent] ?? 0 + 1).toString() + ". ";
+          listPrefix = (listIndents[lineIndent] ?? 0).toString() + ". ";
         } else if (lineIndent % 3 === 1) {
-          listPrefix = getLineNumberAlpha(listIndents[lineIndent] ?? 0) + ". ";
+          listPrefix = getLineNumberAlpha((listIndents[lineIndent] ?? 0) - 1) + ". ";
         } else if (lineIndent % 3 === 2) {
-          listPrefix = getLineNumberRoman(listIndents[lineIndent] ?? 0 + 1) + ". ";
+          listPrefix = getLineNumberRoman(listIndents[lineIndent] ?? 0) + ". ";
         }
       } else if (listType === "bullet") {
         listPrefix = "• ";
