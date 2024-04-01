@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const whitespacePrefix = <Text style={{fontSize: 1, color: styles.page.backgroundColor}}>.</Text>;
+const whitespacePrefix = <Text style={{ fontSize: 1, color: styles.page.backgroundColor }}>.</Text>;
 
 const getLineNumberAlpha = (n: number) => {
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -62,7 +62,7 @@ const getLineNumberAlpha = (n: number) => {
 }
 
 const getLineNumberRoman = (n: number) => {
-  const roman = [ {m: 1000}, {cm: 900}, {d: 500}, {cd: 400}, {c: 100}, {xc: 90}, {l: 50}, {xl: 40}, {x: 10}, {ix: 9}, {v: 5}, {iv: 4}, {i: 1} ];
+  const roman = [{ m: 1000 }, { cm: 900 }, { d: 500 }, { cd: 400 }, { c: 100 }, { xc: 90 }, { l: 50 }, { xl: 40 }, { x: 10 }, { ix: 9 }, { v: 5 }, { iv: 4 }, { i: 1 }];
   let str = "";
   for (const i of roman) {
     while (n >= Object.values(i)[0]) {
@@ -132,7 +132,7 @@ function parseDelta(delta: Delta | undefined) {
       const lineIndent = Number(attributes.indent ?? 0);  // The indent starts at 0
       if (listIndents.length <= lineIndent) {
         listIndents.push(0);
-      } else if (listIndents.length > lineIndent + 1){
+      } else if (listIndents.length > lineIndent + 1) {
         listIndents = listIndents.slice(0, lineIndent + 1);
       }
       listIndents[lineIndent]++;
@@ -168,12 +168,12 @@ function parseDelta(delta: Delta | undefined) {
 }
 
 export function CoverLetter(props: {
-  letterContents: Delta | string | undefined;
-  name: Delta | string | undefined;
-  email: Delta | string | undefined;
-  phone: Delta | string | undefined;
+  letterContents?: Delta | string;
+  name?: Delta | string;
+  email?: Delta | string;
+  phone?: Delta | string;
 }) {
-  const output = (contents: Delta | string | undefined) => {
+  const output = (contents?: Delta | string) => {
     if (typeof contents === "string") {
       return <Text>{contents}</Text>;
     } else {

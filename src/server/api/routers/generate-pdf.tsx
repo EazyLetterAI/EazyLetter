@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import ReactPDF from "@react-pdf/renderer";
-import { CoverLetter } from "~/app/_components/pdf";
+import { CoverLetter } from "~/app/_components/pdf-generation";
 
 export const pdfRouter = createTRPCRouter({
   generateLetterPdf: protectedProcedure

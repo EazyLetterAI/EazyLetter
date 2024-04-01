@@ -6,18 +6,12 @@ import Editor, {
   Toolbar,
   makeEmptyDelta,
 } from "../_components/rich-text/rich-text";
-import { CoverLetter } from "../_components/pdf";
+import { CoverLetter } from "../_components/pdf-generation";
 import Modal from "../_components/modal";
-import dynamic from "next/dynamic";
 import type ReactQuill from "react-quill";
 import { type UnprivilegedEditor } from "react-quill";
 import type { Delta } from "quill";
-import { RxOpenInNewWindow } from "react-icons/rx";
-
-// These require dynamic imports since they are client only
-const PDFDownloadLink = dynamic(() => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink), { ssr: false });
-const BlobProvider = dynamic(() => import("@react-pdf/renderer").then((mod) => mod.BlobProvider), { ssr: false });
-const PDFViewer = dynamic(() => import("@react-pdf/renderer").then((mod) => mod.PDFViewer), {ssr: false });
+import PDFViewerWidget from "../_components/pdf-widget";
 
 export default function GenerateLetter() {
   const [jobDetails, setJobDetails] = useState("");
@@ -115,27 +109,7 @@ export default function GenerateLetter() {
         </button>
       </Modal>
       <div className="space-y-2 z-10 flex h-3/5 w-screen flex-col rounded-lg border border-slate-400 bg-gradient-to-r from-slate-50 p-2 px-8 shadow-xl sm:sticky sm:top-1/4 sm:float-end sm:w-5/12 sm:px-2">
-        <PDFViewer width={"100%"} className="flex-grow" showToolbar={false}>
-          {deferredLetter}
-        </PDFViewer>
-        <div className="flex space-x-2">
-          <PDFDownloadLink document={deferredLetter} fileName="letter.pdf" className="flex-grow">
-            <button
-              className="w-full rounded-lg px-2 font-bold text-slate-800 outline outline-slate-800 duration-300 ease-in-out hover:bg-white hover:text-blue-500"
-            >
-              Download PDF
-            </button>
-          </PDFDownloadLink>
-          <BlobProvider document={deferredLetter}>
-            {({ url }) => (
-              <a href={url ?? ""} target="_blank">
-                <button className="rounded-lg px-2 max-h-full h-full font-bold text-slate-800 outline outline-slate-800 duration-300 ease-in-out hover:bg-white hover:text-blue-500">
-                  <RxOpenInNewWindow/>
-                </button>
-              </a>
-            )}
-          </BlobProvider>
-        </div>
+        <PDFViewerWidget pdf={deferredLetter} downloadFilename="letter.pdf"/>
       </div>
       <div
         className={`w-screen space-y-2 rounded-lg border border-slate-400 bg-white p-2 px-8 text-sm sm:mt-8 sm:w-3/5 sm:p-4`}

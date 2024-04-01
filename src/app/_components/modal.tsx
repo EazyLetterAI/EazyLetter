@@ -8,6 +8,12 @@ export default function Modal(props: {
     e.stopPropagation();
   };
 
+  document.onkeydown = (e) => {
+    if (e.key === "Escape" && props.isOpen) {
+      props.onClose();
+    }
+  }
+
   return (
     <div
       className={`fixed inset-0 z-40 transition-opacity duration-150 ${props.isOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
