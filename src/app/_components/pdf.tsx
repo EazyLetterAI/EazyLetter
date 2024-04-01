@@ -8,7 +8,6 @@ import {
   Link,
 } from "@react-pdf/renderer";
 import type { Style } from "@react-pdf/types";
-import { propagateServerField } from "next/dist/server/lib/render-server";
 import type { Delta } from "quill";
 
 Font.register({

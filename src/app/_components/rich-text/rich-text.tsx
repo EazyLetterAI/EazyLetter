@@ -98,8 +98,6 @@ const Editor = memo(function Editor(props: {
     }
   };
 
-  console.log(props.value);
-
   return (
     <ReactQuillDynamic
       forwardRef={effectiveRef}
