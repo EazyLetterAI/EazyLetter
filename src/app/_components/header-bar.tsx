@@ -24,7 +24,7 @@ export async function HeaderBar() {
           {session?.user ? (
             <>
               <Link href="/">Account</Link>
-              <Link href="/">Dashboard</Link>
+              <Link href="/dashboard">Dashboard</Link>
               <Link href="/">Pricing</Link>
               <Link href="/api/auth/signout">Logout</Link>
             </>
