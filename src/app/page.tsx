@@ -9,11 +9,6 @@ import { Footer } from "~/app/_components/footer";
 
 export default async function Home() {
   const session =  await getServerAuthSession();
-  if (!session) {
-    // Redirect or handle unauthorized access
-    console.log("no session");
-    return <div>Unauthorized</div>;
-  }
   return (
     <main>
       <div className="flex">
