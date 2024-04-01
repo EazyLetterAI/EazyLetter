@@ -241,10 +241,9 @@ export function EditUserInfo() {
     if (!date) {
       return "";
     }
-
     const year = date?.getFullYear();
     const month = date?.getMonth() + 1;
-    const dt = date?.getDate();
+    const dt = date?.getDate() + 1;
 
     let formattedMonth: string | number = month; // Declare formattedMonth variable outside if statements
     let formatteddt: string | number = dt; // Declare formatteddt variable outside if statements
@@ -409,9 +408,9 @@ export function EditUserInfo() {
           <input
             type="date"
             placeholder="Start Date"
-            value={experience?.startDate?.toISOString().split("T")[0]}
+            value={formatDate(experience.startDate)}
             onChange={(event) =>
-              changeEducationInfo(
+              changeExperienceInfo(
                 index,
                 "startDate",
                 new Date(event.target.value),
@@ -421,9 +420,9 @@ export function EditUserInfo() {
           <input
             type="date"
             placeholder="End Date"
-            value={experience?.endDate?.toISOString().split("T")[0]}
+            value={formatDate(experience.endDate)}
             onChange={(event) =>
-              changeEducationInfo(
+              changeExperienceInfo(
                 index,
                 "endDate",
                 new Date(event.target.value),
