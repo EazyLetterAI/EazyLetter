@@ -5,9 +5,34 @@ import React from "react";
 import { getServerAuthSession } from "~/server/auth";
 import { SocialIcon } from "react-social-icons"
 import Graphic1 from "../../public/home-image.png";
-
-
 import { HeaderBar } from "~/app/_components/header-bar";
+
+
+type PricingPlanProps = {
+  title: string;
+  description: string;
+  price: string | number;
+  buttonText: string;
+  features: string[];
+};
+const PricingPlan: React.FC<PricingPlanProps> = ({ title, description, price, buttonText, features }) => (
+  <div className="w-1/4 mx-auto bg-white rounded-3xl">
+    <div className="bg-purple-500"> </div>
+    <p className="text-3xl font-medium pt-8">{title}</p>
+    <p className="text-gray-500 pt-2">{description}</p>
+    <p className="text-2xl font-medium py-4">{price}</p>
+    <button className="bg-gradient-linear rounded-md py-2 px-6 text-white">{buttonText}</button>
+    <div className="bottomhalf pt-6 pb-5">
+      <hr />
+    </div>
+    <ul className="pb-4">
+      {features.map((feature,index) => (
+        <li className="text-gray-700" key={index}><span className="text-fuchsia-500">✓</span> {feature}</li>
+      ))}
+    </ul>
+
+  </div>
+);
 
 export default async function Home() {
   const session =  await getServerAuthSession();
@@ -59,17 +84,22 @@ export default async function Home() {
             {/* Pricing */}
       <div className="PricingSection text-center">
         <p className="text-fuchsia-500 text-4xl font-semibold">Pricing</p>
-        <p className="text-black text-6xl font-bold">Choose your plan</p>
-        <div className="top-0 flex w-full flex-row justify-center">
-          <div className="w-1/3">
-            <p>Starter Plan</p>
-            <p>Try EazyLetter For Free</p>
-            
-          </div>
-          <div className="w-1/3">
-            <p>Pro Plan</p>
-            <p>Start Applying Today</p>
-          </div>
+        <p className="text-black text-6xl font-bold pb-6">Choose <span className="text-fuchsia-500">your plan</span>.</p>
+        <div className="top-0 flex w-full flex-row justify-center pb-6">
+          <PricingPlan 
+            title="Starter Plan" 
+            description="Try EazyLetter For Free" 
+            price="Free" 
+            buttonText="Sign up"
+            features={["Feature 1", "Feature 2", "Feature 3"]}
+          />
+          <PricingPlan 
+            title="Pro Plan" 
+            description="Start Applying Today" 
+            price="$10" 
+            buttonText="Get Started"
+            features={["Feature 1", "Feature 2", "Feature 3"]}
+          />
         </div>
       </div>
       {/* <div className="resume">
