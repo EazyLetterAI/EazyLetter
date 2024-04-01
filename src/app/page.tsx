@@ -58,17 +58,17 @@ export default async function Home() {
       </div>
             {/* Pricing */}
       <div className="PricingSection text-center">
-        <p className="text-fuchsia-500 text-2xl font-medium">Pricing</p>
-        <p className="text-black text-5xl font-medium">Choose your plan</p>
-        <div className="top-0 flex w-full flex-row justify-between">
-          <div className="w-1/2">
-            <p>YOOYOY</p>
+        <p className="text-fuchsia-500 text-4xl font-semibold">Pricing</p>
+        <p className="text-black text-6xl font-bold">Choose your plan</p>
+        <div className="top-0 flex w-full flex-row justify-center">
+          <div className="w-1/3">
+            <p>Starter Plan</p>
+            <p>Try EazyLetter For Free</p>
+            
           </div>
           <div className="w-1/3">
-            <p>YOOYOY</p>
-          </div>
-          <div className="w-1/3">
-            <p>YOOYOY</p>
+            <p>Pro Plan</p>
+            <p>Start Applying Today</p>
           </div>
         </div>
       </div>
