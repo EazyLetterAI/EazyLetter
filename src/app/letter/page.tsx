@@ -4,10 +4,10 @@ import GenerateLetter from "./components";
 export default async function Home() {
   return (
     <main>
-      <HeaderBar />
+      <HeaderBar/>
       <div className="flex justify-center">
         <div className="w-screen md:max-w-5xl">
-          <GenerateLetter />
+          <GenerateLetter/>
         </div>
       </div>
     </main>

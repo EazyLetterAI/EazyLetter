@@ -1,5 +1,6 @@
 import { openAIRouter } from "~/server/api/routers/ai";
-import { letterRouter } from "~/server/api/routers/letter";
+import { pdfRouter } from "~/server/api/routers/generate-pdf";
+import { scrapingRouter } from "~/server/api/routers/scrape";
 import { createTRPCRouter } from "~/server/api/trpc";
 import { userInfoRouter } from "./routers/user-info";
 
@@ -10,7 +11,8 @@ import { userInfoRouter } from "./routers/user-info";
  */
 export const appRouter = createTRPCRouter({
   ai: openAIRouter,
-  letter: letterRouter,
+  pdf: pdfRouter,
+  scraping: scrapingRouter
   userInfo: userInfoRouter
 });
 
