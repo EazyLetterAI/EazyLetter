@@ -51,7 +51,6 @@ export const userLinksRelations = relations(userLinks, ({ one }) => ({
 export const userExperiences = createTable("userExperience", {
   userId: varchar("userId", { length: 255 }).notNull()
     .references(() => users.id),
-  // experienceName: varchar("experienceName", { length: 255 }).notNull(),
   title: varchar("title", { length: 255 }),
   location: varchar("location", { length: 255 }),
   startDate: date("startDate").notNull(),
@@ -59,7 +58,10 @@ export const userExperiences = createTable("userExperience", {
   descriptions: varchar("descriptions", { length: 255 }),            
   type: varchar("type", { length: 255 }).notNull(),
   link: varchar("link", { length: 255}),  // link related to that experience, can be a website, github repo, etc.
-});
+}, (userExperience) => ({
+  primaryKey: primaryKey({columns: [userExperience.userId, userExperience.title, userExperience.startDate]}),
+  userIdIdx: index("userExperience_userId_idx").on(userExperience.userId),
+}));
 
 export const experienceRelations = relations(userExperiences, ({ one }) => ({
   user: one(users, { fields: [userExperiences.userId], references: [users.id] }),
@@ -76,7 +78,10 @@ export const education = createTable("education", {
   degree: varchar("degree", { length: 255 }),
   honors: varchar("honors", { length: 255 }),
   relevantCoursework: varchar("relevantCoursework", { length: 255 }),
-});
+}, (education) => ({
+  primaryKey: primaryKey({columns: [education.userId, education.schoolName, education.startDate]}),
+  userIdIdx: index("education_userId_idx").on(education.userId),
+}));
 
 export const educationRelations = relations(education, ({ one }) => ({
   user: one(users, { fields: [education.userId], references: [users.id] }),
@@ -85,8 +90,11 @@ export const educationRelations = relations(education, ({ one }) => ({
 export const skills = createTable("skills", {
   userId: varchar("userId", { length: 255 }).notNull()
     .references(() => users.id),
-  skills: varchar("skills", { length: 255 }),
-})
+  skill: varchar("skill", { length: 255 }),
+}, (skills) => ({
+  primaryKey: primaryKey({columns: [skills.userId, skills.skill]}),
+  userIdIdx: index("skills_userId_idx").on(skills.userId),
+}));
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),

@@ -1,9 +1,14 @@
 import { getServerAuthSession } from "~/server/auth";
 import { HeaderBar } from "../_components/header-bar";
 import GenerateLetter from "./components";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const session = await getServerAuthSession();
+
+  if (!session?.user) {
+    return redirect("/api/auth/signin");
+  }
 
   return (
     <main>

@@ -2,7 +2,6 @@ import * as schema from "~/server/db/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
-import exp from "constants";
 
 export const userInfoRouter = createTRPCRouter({
   retrieveUserInfo: protectedProcedure.query(async ({ ctx }) => {
@@ -50,7 +49,7 @@ export const userInfoRouter = createTRPCRouter({
 
     const skillsInfo = await ctx.db
       .select({
-        user_skills: schema.skills.skills,
+        user_skills: schema.skills.skill,
       })
       .from(schema.skills)
       .where(eq(schema.skills.userId, ctx.session.user.id));
