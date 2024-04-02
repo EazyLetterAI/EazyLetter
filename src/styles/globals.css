@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    @apply bg-sky-50 text-black;
+}
+
+.ql-toolbar.ql-toolbar.ql-snow {
+    @apply border-none;
+    @apply p-0;
+}
+
+.ql-container.ql-container.ql-snow {
+    @apply border-none;
+}
+
+.ql-single-line .ql-editor {
+    @apply py-1;
+}
+
+.ql-snow.ql-toolbar button.ql-generateLetter {
+    @apply w-fit;
+}
