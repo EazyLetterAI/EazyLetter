@@ -149,4 +149,3 @@ export default async function Home() {
           <Image src={Graphic1} alt="picture" />
         </div>
       </div> */}
-

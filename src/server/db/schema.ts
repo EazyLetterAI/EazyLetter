@@ -40,7 +40,7 @@ export const userLinks = createTable("userLink", {
   type: varchar("type", { length: 255 }).notNull(),
   link: varchar("link", { length: 255 }).notNull(),
 }, (userLink) => ({
-  primaryKey: primaryKey({columns: [userLink.userId, userLink.type]}),
+  primaryKey: primaryKey({ columns: [userLink.userId, userLink.type] }),
   userIdIdx: index("userLink_userId_idx").on(userLink.userId),
 }));
 
@@ -94,6 +94,21 @@ export const skills = createTable("skills", {
 }, (skills) => ({
   primaryKey: primaryKey({columns: [skills.userId, skills.skill]}),
   userIdIdx: index("skills_userId_idx").on(skills.userId),
+});
+
+export const files = createTable("files", {
+  fileUrl: varchar("fileId", { length: 255 }).notNull(),
+  userId: varchar("userId", { length: 255 }).notNull()
+    .references(() => users.id),
+  name: varchar("name", { length: 255 }).notNull(),
+  category: varchar("category", { length: 255 }).notNull(),
+}, (file) => ({
+  primaryKey: primaryKey({ columns: [file.fileUrl, file.userId] }),
+  userIdIdx: index("userLink_userId_idx").on(file.userId),
+}));
+
+export const fileRelations = relations(files, ({ one }) => ({
+  user: one(users, { fields: [files.userId], references: [users.id] }),
 }));
 
 export const usersRelations = relations(users, ({ many }) => ({
