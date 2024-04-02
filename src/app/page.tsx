@@ -12,9 +12,9 @@ const PricingPlan = (props: { title: string; description: string; price: string 
       <p className="text-3xl font-medium">{props.title}</p>
       <p className="text-gray-500 pt-2">{props.description}</p>
       <p className="text-2xl font-medium py-4">{props.price}</p>
-      <a href="/api/auth/signin">
+      <Link href="/api/auth/signin">
         <button className="bg-gradient-to-r from-blue-600 to-fuchsia-600 rounded-md py-2 px-6 text-white">{props.buttonText}</button>
-      </a>
+      </Link>
     </div>
     <div className="bottomhalf pt-6 pb-5 hidden md:block">
       <hr />
