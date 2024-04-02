@@ -44,21 +44,21 @@ export default async function Home() {
           </h1>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
             <Link className="flex flex-col gap-4 rounded-xl bg-white p-4 hover:bg-slate-900 hover:text-white transition-all ease-in-out duration-500"
-              href="/resume" target="_blank">
+              href="/resume">
               <h3 className="text-2xl font-bold text-fuchsia-500">Create my Resume →</h3>
               <div className="text-lg">
                 {"Generate the perfect professional resume in minutes with the help of our AI. Certified ATS compliant."}
               </div>
             </Link>
             <Link className="flex flex-col gap-4 rounded-xl bg-white p-4 hover:bg-slate-900 hover:text-white transition-all ease-in-out duration-500"
-              href="/letter" target="_blank">
+              href="/letter">
               <h3 className="text-2xl font-bold text-fuchsia-500">Write my Cover Letter →</h3>
               <div className="text-lg text-inherit">
                 {"Construct a cover letter to land your next interview with our AI. Certified ATS compliant."}
               </div>
             </Link>
             <Link className="flex flex-col gap-4 rounded-xl bg-white p-4 hover:bg-slate-900 hover:text-white transition-all ease-in-out duration-500"
-              href="/interview" target="_blank">
+              href="/interview">
               <h3 className="text-2xl font-bold text-fuchsia-500">Interview Me →</h3>
               <div className="text-lg text-inherit">
                 {"Practice your interview questions with our AI's voice-to-text recognition software."}
