@@ -22,6 +22,7 @@
     "@trpc/next": "^10.45.1",
     "@trpc/react-query": "^10.45.1",
     "@trpc/server": "^10.45.1",
+    "@uploadthing/react": "^6.4.1",
     "cheerio": "^1.0.0-rc.12",
     "drizzle-orm": "^0.29.4",
     "file-saver": "^2.0.5",
@@ -34,6 +35,7 @@
     "react-pdf": "^7.7.1",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
+    "uploadthing": "^6.7.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

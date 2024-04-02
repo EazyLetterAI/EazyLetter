@@ -28,7 +28,7 @@ export const users = createTable("user", {
     fsp: 3,
   }).default(sql`CURRENT_TIMESTAMP(3)`),
   image: varchar("image", { length: 255 }),
-  firstname: varchar("firstname", { length: 255 }).notNull().default("First name"),
+  firstname: varchar("name", { length: 255 }).notNull().default("First name"),
   middlename: varchar("middlename", { length: 255 }),
   lastname: varchar("lastname", { length: 255 }).notNull().default("Last name"),
   address: varchar("address", { length: 255 }),
@@ -41,7 +41,7 @@ export const userLinks = createTable("userLink", {
   type: varchar("type", { length: 255 }).notNull(),
   link: varchar("link", { length: 255 }).notNull(),
 }, (userLink) => ({
-  primaryKey: primaryKey({columns: [userLink.userId, userLink.type]}),
+  primaryKey: primaryKey({ columns: [userLink.userId, userLink.type] }),
   userIdIdx: index("userLink_userId_idx").on(userLink.userId),
 }));
 
@@ -56,10 +56,10 @@ export const userExperiences = createTable("userExperience", {
   title: varchar("title", { length: 255 }),
   location: varchar("location", { length: 255 }),
   startDate: date("startDate").notNull(),
-  endDate: date("endDate"), 
-  Descriptions: varchar("descriptions", { length: 255 }),            
+  endDate: date("endDate"),
+  Descriptions: varchar("descriptions", { length: 255 }),
   type: varchar("type", { length: 255 }).notNull(),
-  link: varchar("link", { length: 255}),  // link related to that experience, can be a website, github repo, etc.
+  link: varchar("link", { length: 255 }),  // link related to that experience, can be a website, github repo, etc.
 });
 
 export const experienceRelations = relations(userExperiences, ({ one }) => ({
@@ -87,7 +87,22 @@ export const skills = createTable("skills", {
   userId: varchar("userId", { length: 255 }).notNull()
     .references(() => users.id),
   skills: varchar("skills", { length: 255 }),
-})
+});
+
+export const files = createTable("files", {
+  fileUrl: varchar("fileId", { length: 255 }).notNull(),
+  userId: varchar("userId", { length: 255 }).notNull()
+    .references(() => users.id),
+  name: varchar("name", { length: 255 }).notNull(),
+  category: varchar("category", { length: 255 }).notNull(),
+}, (file) => ({
+  primaryKey: primaryKey({ columns: [file.fileUrl, file.userId] }),
+  userIdIdx: index("userLink_userId_idx").on(file.userId),
+}));
+
+export const fileRelations = relations(files, ({ one }) => ({
+  user: one(users, { fields: [files.userId], references: [users.id] }),
+}));
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
