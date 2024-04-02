@@ -12,9 +12,9 @@ const PricingPlan = (props: { title: string; description: string; price: string 
       <p className="text-3xl font-medium">{props.title}</p>
       <p className="text-gray-500 pt-2">{props.description}</p>
       <p className="text-2xl font-medium py-4">{props.price}</p>
-      <a href="/api/auth/signin">
+      <Link href="/api/auth/signin">
         <button className="bg-gradient-to-r from-blue-600 to-fuchsia-600 rounded-md py-2 px-6 text-white">{props.buttonText}</button>
-      </a>
+      </Link>
     </div>
     <div className="bottomhalf pt-6 pb-5 hidden md:block">
       <hr />
@@ -38,27 +38,27 @@ export default async function Home() {
 
       {/* Features */}
       <div className="flex min-h-screen flex-col items-center justify-center text-black">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
+        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16" id="features">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             Your <span className="text-fuchsia-500">dream job</span> starts here.
           </h1>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
             <Link className="flex flex-col gap-4 rounded-xl bg-white p-4 hover:bg-slate-900 hover:text-white transition-all ease-in-out duration-500"
-              href="/resume" target="_blank">
+              href="/resume">
               <h3 className="text-2xl font-bold text-fuchsia-500">Create my Resume →</h3>
               <div className="text-lg">
                 {"Generate the perfect professional resume in minutes with the help of our AI. Certified ATS compliant."}
               </div>
             </Link>
             <Link className="flex flex-col gap-4 rounded-xl bg-white p-4 hover:bg-slate-900 hover:text-white transition-all ease-in-out duration-500"
-              href="/letter" target="_blank">
+              href="/letter">
               <h3 className="text-2xl font-bold text-fuchsia-500">Write my Cover Letter →</h3>
               <div className="text-lg text-inherit">
                 {"Construct a cover letter to land your next interview with our AI. Certified ATS compliant."}
               </div>
             </Link>
             <Link className="flex flex-col gap-4 rounded-xl bg-white p-4 hover:bg-slate-900 hover:text-white transition-all ease-in-out duration-500"
-              href="/interview" target="_blank">
+              href="/interview">
               <h3 className="text-2xl font-bold text-fuchsia-500">Interview Me →</h3>
               <div className="text-lg text-inherit">
                 {"Practice your interview questions with our AI's voice-to-text recognition software."}
@@ -68,7 +68,7 @@ export default async function Home() {
         </div>
 
         {/* Pricing */}
-        <div className="container text-center px-4 py-4">
+        <div className="container text-center px-4 py-4" id="pricing">
           <p className="text-black text-6xl font-bold pb-6">Choose <span className="text-fuchsia-500">your plan</span>.</p>
           <div className="top-0 flex w-full flex-col md:flex-row justify-center items-center md:items-start pb-6 md:space-x-10 space-y-5 md:space-y-0">
             <PricingPlan
