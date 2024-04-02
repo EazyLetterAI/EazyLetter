@@ -38,7 +38,7 @@ export default async function Home() {
 
       {/* Features */}
       <div className="flex min-h-screen flex-col items-center justify-center text-black">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
+        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16" id="features">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             Your <span className="text-fuchsia-500">dream job</span> starts here.
           </h1>
@@ -68,7 +68,7 @@ export default async function Home() {
         </div>
 
         {/* Pricing */}
-        <div className="container text-center px-4 py-4">
+        <div className="container text-center px-4 py-4" id="pricing">
           <p className="text-black text-6xl font-bold pb-6">Choose <span className="text-fuchsia-500">your plan</span>.</p>
           <div className="top-0 flex w-full flex-col md:flex-row justify-center items-center md:items-start pb-6 md:space-x-10 space-y-5 md:space-y-0">
             <PricingPlan

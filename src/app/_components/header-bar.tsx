@@ -30,8 +30,8 @@ export function HeaderBar(props: {session: Session | null}) {
           <div className="nav hidden md:flex items-center justify-between space-x-8">
             {session?.user ? (
               <>
-                <Link href="/">Features</Link>
-                <Link href="/">Pricing</Link>
+                <Link href="#features">Features</Link>
+                <Link href="#pricing">Pricing</Link>
                 <Link href="/">About</Link>
                 <Link href="/dashboard">
                   <button className="bg-gradient-to-r from-blue-600 to-fuchsia-600 rounded-md py-2 px-6 text-white">
