@@ -6,6 +6,8 @@ body {
     @apply bg-sky-50 text-black;
 }
 
+/* Quill editor styling */
+
 .ql-toolbar.ql-toolbar.ql-snow {
     @apply border-none;
     @apply p-0;

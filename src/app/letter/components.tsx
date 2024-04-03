@@ -4,7 +4,7 @@ import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } f
 import { api } from "~/trpc/react";
 import Editor, {
   Toolbar,
-  makeEmptyDelta,
+  makeNewDelta,
 } from "../_components/rich-text/rich-text";
 import { CoverLetter } from "../_components/pdf-generation";
 import Modal from "../_components/modal";
@@ -12,18 +12,22 @@ import type ReactQuill from "react-quill";
 import { type UnprivilegedEditor } from "react-quill";
 import type { Delta } from "quill";
 import PDFViewerWidget from "../_components/pdf-widget";
+import type { RouterOutputs } from "~/trpc/shared";
 
-export default function GenerateLetter() {
+type UserInfo = RouterOutputs["userInfo"]["retrieveUserInfo"];
+
+export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: string, disableName?: boolean}) {
   const [jobDetails, setJobDetails] = useState("");
   const [applicantInfo, setApplicantInfo] = useState("");
 
   const [focusedEditor, setFocusedEditor] = useState<"main" | "name" | "email" | "phone">("main");
-  const [letterEditorValue, setLetterEditorValue] = useState<Delta | undefined>(undefined);
-  const [nameEditorValue, setNameEditorValue] = useState<Delta | undefined>(undefined);
-  const [emailEditorValue, setEmailEditorValue] = useState<Delta | undefined>(undefined);
-  const [phoneEditorValue, setPhoneEditorValue] = useState<Delta | undefined>(undefined);
+  const [letterEditorValue, setLetterEditorValue] = useState<Delta | string | undefined>(undefined);
+  const [nameEditorValue, setNameEditorValue] = useState<Delta | string | undefined>(undefined);
+  const [emailEditorValue, setEmailEditorValue] = useState<Delta | string | undefined>(undefined);
+  const [phoneEditorValue, setPhoneEditorValue] = useState<Delta | string | undefined>(undefined);
 
   const mainEditorRef = useRef<ReactQuill>(null);
+  const focusName = useCallback(() => setFocusedEditor("name"), []);
 
   const [generateIsOpen, setGenerateIsOpen] = useState(false);
 
@@ -43,10 +47,9 @@ export default function GenerateLetter() {
 
   useEffect(() => {
     if (res.data?.letter) {
-      const delta = makeEmptyDelta(mainEditorRef.current)?.insert(
+      const delta = makeNewDelta(mainEditorRef.current)?.insert(
         res.data.letter,
       );
-      // const loc = mainEditorRef.current?.getEditor().getSelection()?.index ?? 0;
       setLetterEditorValue(delta);
     }
   }, [res.data]);
@@ -63,9 +66,10 @@ export default function GenerateLetter() {
     }
   }, []);
 
+  const userName = [props.userInfo.personal?.firstname, props.userInfo.personal?.lastname].filter(Boolean).join(" ");
   const letter = useMemo(
-    () => (<CoverLetter letterContents={letterEditorValue} name={nameEditorValue} email={emailEditorValue} phone={phoneEditorValue} />
-    ), [emailEditorValue, letterEditorValue, nameEditorValue, phoneEditorValue]);
+    () => (<CoverLetter letterContents={letterEditorValue} name={props.disableName ? userName : nameEditorValue} email={emailEditorValue} phone={phoneEditorValue} />
+    ), [emailEditorValue, letterEditorValue, nameEditorValue, phoneEditorValue, props.disableName, userName]);
 
   const deferredLetter = useDeferredValue(letter);
 
@@ -123,41 +127,40 @@ export default function GenerateLetter() {
           </div>
           <div className={res.isFetching ? "hidden" : ""}>
             <div className="flex">
-              <Editor
+              {(props.disableName !== true) && (<Editor
                 toolbarId="nameToolbar"
                 placeholder="Name"
-                value={nameEditorValue}
+                initial={userName}
                 setValue={setNameEditorValue}
                 singleLine
-                onFocus={useCallback(() => setFocusedEditor("name"), [])}
+                onFocus={focusName}
                 generateAIHandler={generateLetterModal}
                 className="ql-single-line w-1/3"
-              />
+              />)}
               <Editor
                 toolbarId="emailToolbar"
                 placeholder="Email"
-                value={emailEditorValue}
+                initial={props.userEmail}
                 setValue={setEmailEditorValue}
                 singleLine
                 onFocus={useCallback(() => setFocusedEditor("email"), [])}
                 generateAIHandler={generateLetterModal}
-                className="ql-single-line w-1/3"
+                className={`ql-single-line ${props.disableName ? "w-1/2" : "w-1/3"}`}
               />
               <Editor
                 toolbarId="phoneToolbar"
                 placeholder="Phone number"
-                value={phoneEditorValue}
+                initial={props.userInfo.personal?.phone ?? ""}
                 setValue={setPhoneEditorValue}
                 singleLine
                 onFocus={useCallback(() => setFocusedEditor("phone"), [])}
                 generateAIHandler={generateLetterModal}
-                className="ql-single-line w-1/3"
+                className={`ql-single-line ${props.disableName ? "w-1/2" : "w-1/3"}`}
               />
             </div>
             <Editor
               toolbarId="mainToolbar"
               placeholder="Write your cover letter..."
-              value={letterEditorValue}
               setValue={setLetterEditorValue}
               onFocus={useCallback(() => setFocusedEditor("main"), [])}
               generateAIHandler={generateLetterModal}

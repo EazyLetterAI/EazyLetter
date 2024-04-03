@@ -46,6 +46,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@types/eslint": "^8.56.2",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^20.11.20",
