@@ -47,13 +47,14 @@ const enabledFormats = [
   "link",
 ];
 
-export const makeEmptyDelta = (editor: ReactQuill | null) => {
+export const makeEmptyDelta = (editor: ReactQuill | null, initial?: string) => {
   return editor?.getEditor().clipboard.convert("");
 };
 
 const Editor = memo(function Editor(props: {
   className?: string;
   placeholder?: string;
+  initial?: string;
   value?: Delta;
   setValue?: (value: Delta | undefined) => void;
   toolbarId?: string;

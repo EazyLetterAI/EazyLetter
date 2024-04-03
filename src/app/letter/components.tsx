@@ -12,6 +12,9 @@ import type ReactQuill from "react-quill";
 import { type UnprivilegedEditor } from "react-quill";
 import type { Delta } from "quill";
 import PDFViewerWidget from "../_components/pdf-widget";
+import type { RouterOutputs } from "~/trpc/shared";
+
+type UserInfo = RouterOutputs["userInfo"]["retrieveUserInfo"];
 
 export default function GenerateLetter() {
   const [jobDetails, setJobDetails] = useState("");
@@ -46,7 +49,6 @@ export default function GenerateLetter() {
       const delta = makeEmptyDelta(mainEditorRef.current)?.insert(
         res.data.letter,
       );
-      // const loc = mainEditorRef.current?.getEditor().getSelection()?.index ?? 0;
       setLetterEditorValue(delta);
     }
   }, [res.data]);
@@ -70,6 +72,8 @@ export default function GenerateLetter() {
   const deferredLetter = useDeferredValue(letter);
 
   const emptyFields = jobDetails.length === 0 || applicantInfo.length === 0;
+
+  console.log(letter);
 
   return (
     <div className="h-screen">
@@ -126,6 +130,7 @@ export default function GenerateLetter() {
               <Editor
                 toolbarId="nameToolbar"
                 placeholder="Name"
+                // initial={[props.userInfo.personal?.firstname, props.userInfo.personal?.lastname].filter(Boolean).join(" ")}
                 value={nameEditorValue}
                 setValue={setNameEditorValue}
                 singleLine

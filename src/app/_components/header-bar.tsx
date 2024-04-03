@@ -7,6 +7,7 @@ import Logo from "../../../public/logo.png";
 import type { Session } from "next-auth";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
+import { signOut } from "next-auth/react";
 
 export function HeaderBar(props: {session: Session | null}) {
   const session = props.session;
@@ -38,7 +39,7 @@ export function HeaderBar(props: {session: Session | null}) {
                     Dashboard
                   </button>
                 </Link>
-                <Link href="/api/auth/signout">Logout</Link>
+                <button onClick={() => signOut()}><span>Logout</span></button>
               </>
             ) : (
               <>
