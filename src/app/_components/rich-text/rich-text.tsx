@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React, { memo, useCallback, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import type ReactQuill from "react-quill";
 import { type Range, type UnprivilegedEditor } from "react-quill";
@@ -47,26 +47,30 @@ const enabledFormats = [
   "link",
 ];
 
-export const makeEmptyDelta = (editor: ReactQuill | null, initial?: string) => {
-  return editor?.getEditor().clipboard.convert("");
+export const makeNewDelta = (editor: ReactQuill | null, initial?: string) => {
+  return editor?.getEditor().clipboard.convert(initial ?? "");
 };
 
 const Editor = memo(function Editor(props: {
   className?: string;
   placeholder?: string;
   initial?: string;
-  value?: Delta;
-  setValue?: (value: Delta | undefined) => void;
+  setValue?: (value: Delta | string | undefined) => void;
   toolbarId?: string;
   onFocus?: (range: Range, source: Sources, editor: UnprivilegedEditor) => void;
   singleLine?: boolean;
   editorRef?: React.RefObject<ReactQuill>;
   generateAIHandler?: (editor?: UnprivilegedEditor) => void;
 }) {
+  const { setValue, initial } = props;
+  useEffect(() => {
+    if (setValue && initial) {
+      setValue(initial);
+    }
+  }, [setValue, initial]);
+
   const editorRef = useRef<ReactQuill>(null);
   const effectiveRef = props.editorRef ?? editorRef;
-
-  const [value, setValue] = useState<Delta | undefined>(props.value ?? makeEmptyDelta(effectiveRef.current));
 
   const generateHandler = props.generateAIHandler;
   const handlerWithEditor = useCallback(() => {
@@ -84,7 +88,7 @@ const Editor = memo(function Editor(props: {
 
   const processValue = (value: Delta) => {
     if (props.singleLine) {
-      let firstLine = makeEmptyDelta(effectiveRef.current);
+      let firstLine = makeNewDelta(effectiveRef.current);
       value.eachLine((line, attributes, idx) => {
         if (idx === 0) {
           line.ops?.forEach((op) => {
@@ -93,9 +97,9 @@ const Editor = memo(function Editor(props: {
           firstLine = firstLine?.insert("\n", { ...attributes });
         }
       });
-      return firstLine;
+      return firstLine ?? props.initial;  // if value is undefined, return the initial value
     } else {
-      return value;
+      return value ?? props.initial;
     }
   };
 
@@ -105,8 +109,8 @@ const Editor = memo(function Editor(props: {
       theme="snow"
       modules={editorModules}
       formats={enabledFormats}
-      value={ props.value != undefined && props.setValue != undefined ? props.value : value }
-      onChange={(value, delta, source, editor) => { props.setValue != undefined ? props.setValue(processValue(editor.getContents())) : setValue(processValue(editor.getContents())); }}
+      defaultValue={props.initial}
+      onChange={(value, delta, source, editor) => { props.setValue != undefined ? props.setValue(processValue(editor.getContents())) : undefined; }}
       onFocus={props.onFocus}
       className={props.className}
       placeholder={props.placeholder}

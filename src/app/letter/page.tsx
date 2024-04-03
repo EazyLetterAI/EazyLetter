@@ -7,7 +7,8 @@ import { api } from "~/trpc/server";
 
 export default async function Home() {
   const session = await getServerAuthSession();
-  // const userInfo = await api.userInfo.retrieveUserInfo.query();
+  const userInfo = await api.userInfo.retrieveUserInfo.query();
+  const userEmail = session?.user?.email;
 
   if (!session?.user) {
     return redirect("/api/auth/signin");
@@ -18,7 +19,7 @@ export default async function Home() {
       <HeaderBar session={session}/>
       <div className="flex justify-center">
         <div className="w-screen md:max-w-5xl">
-          <GenerateLetter />
+          <GenerateLetter userInfo={userInfo} userEmail={userEmail ?? ""} disableName={true}/>
         </div>
       </div>
       <Footer/>
