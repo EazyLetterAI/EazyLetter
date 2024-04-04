@@ -94,7 +94,7 @@ export const skills = createTable("skills", {
 }, (skills) => ({
   primaryKey: primaryKey({columns: [skills.userId, skills.skill]}),
   userIdIdx: index("skills_userId_idx").on(skills.userId),
-});
+}));
 
 export const files = createTable("files", {
   fileUrl: varchar("fileId", { length: 255 }).notNull(),

@@ -29,7 +29,7 @@ export default async function SignIn(props: Props) {
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             <span className="text-fuchsia-500">Sign</span> {action === "signin" ? "in" : "up"}!
           </h1>
-          <h3 className="text-2xl text-center">Welcome back.</h3>
+          <h3 className="text-2xl text-center">{action === "signin" ? "Welcome back." : "Create an account."}</h3>
           {props.searchParams?.error && (
             <div className="bg-red-200 text-red-600 p-1 rounded mt-3">
               <p>{errorMessages[props.searchParams.error]}</p>
