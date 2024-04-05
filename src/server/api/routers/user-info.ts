@@ -75,9 +75,9 @@ export const userInfoRouter = createTRPCRouter({
   updatePersonalInfo: protectedProcedure
     .input(
       z.object({
-        firstname: z.string().optional(),
+        firstname: z.string().min(1, {message: "First name can't be empty"}),
         middlename: z.string().optional(),
-        lastname: z.string().optional(),
+        lastname: z.string().min(1, {message: "Last name can't be empty"}),
         address: z.string().optional(),
         phone: z.string().optional(),
       }),
@@ -99,7 +99,7 @@ export const userInfoRouter = createTRPCRouter({
     .input(
       z.array(
         z.object({
-          schoolName: z.string(),
+          schoolName: z.string().min(1, {message: "School Name can't be empty"}),
           location: z.string(),
           startDate: z.date(),
           endDate: z.date(),
@@ -135,7 +135,7 @@ export const userInfoRouter = createTRPCRouter({
       z.array(
         z.object({
           title: z.string(),
-          type: z.string(),
+          type: z.string().min(1, {message: "Experience type can't be empty"}),
           location: z.string(),
           startDate: z.date(),
           endDate: z.date(),
@@ -188,8 +188,8 @@ export const userInfoRouter = createTRPCRouter({
     .input(
       z.array(
         z.object({
-          type: z.string(),
-          link: z.string(),
+          type: z.string().min(1, {message: "Link type can't be empty"}),
+          link: z.string().min(1, {message: "Link can't be empty"}),
         }),
       ),
     )

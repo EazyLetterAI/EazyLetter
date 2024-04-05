@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { api } from "~/trpc/react";
 import type { RouterOutputs } from "~/trpc/shared";
+import toast, { Toaster } from 'react-hot-toast';
 
 const educationInfo = {
   schoolName: "",
@@ -39,11 +40,92 @@ export function EditUserInfo() {
     cacheTime: Infinity,
     retry: false,
   });
-  const mutateUserInfo = api.userInfo.updatePersonalInfo.useMutation();
-  const mutateEducationInfo = api.userInfo.updateEducationInfo.useMutation();
-  const mutateExperienceInfo = api.userInfo.updateExperienceInfo.useMutation();
+  const mutateUserInfo = api.userInfo.updatePersonalInfo.useMutation(
+    {
+      onError : (e) => {
+        const errorMessage = e.data?.zodError?.fieldErrors;
+        
+        console.log(errorMessage) // object
+        if (errorMessage){
+          // console.log(typeof Object.entries(errorMessage)[0]) // object
+          Object.values(errorMessage).forEach(value => {
+            console.log(value);
+            const message = value?.[0];
+            toast.error(message);
+          });
+        }
+                  
+        else{
+          toast.error("failed")
+        }
+      }
+    }   
+  );
+  const mutateEducationInfo = api.userInfo.updateEducationInfo.useMutation(
+    {
+      onError : (e) => {
+        const errorMessage = e.data?.zodError?.fieldErrors;
+        console.log(errorMessage) // object
+        if (errorMessage){
+          // console.log(typeof Object.entries(errorMessage)[0]) // object
+          Object.values(errorMessage).forEach(value => {
+            console.log(typeof value);
+            const message = value?.[0];
+            console.log( message)
+            toast.error(message);
+          });
+        }
+                  
+        else{
+          toast.error("failed")
+        }
+      }
+    }
+  );
+  const mutateExperienceInfo = api.userInfo.updateExperienceInfo.useMutation(
+    {
+      onError : (e) => {
+        const errorMessage = e.data?.zodError?.fieldErrors;
+        console.log(errorMessage) // object
+        if (errorMessage){
+          // console.log(typeof Object.entries(errorMessage)[0]) // object
+          Object.values(errorMessage).forEach(value => {
+            console.log(typeof value?.length )
+            for (let i = 0; i< value?.length; i++){
+              const message = value?.[i];
+              toast.error(message);
+            } 
+          });
+        } 
+                  
+        else{
+          toast.error("failed")
+        }
+      }
+    }
+  );
   const mutateSkillsInfo = api.userInfo.updateSkillsInfo.useMutation();
-  const mutateLinkInfo = api.userInfo.updateLinkInfo.useMutation();
+  const mutateLinkInfo = api.userInfo.updateLinkInfo.useMutation(
+    {
+      onError : (e) => {
+        const errorMessage = e.data?.zodError?.fieldErrors;
+        console.log(errorMessage) // object
+        if (errorMessage){
+          // console.log(typeof Object.entries(errorMessage)[0]) // object
+          Object.values(errorMessage).forEach(value => {
+            console.log(typeof value?.length )
+            for (let i = 0; i< value?.length; i++){
+              const message = value?.[i];
+              toast.error(message);
+            } 
+          });
+        }           
+        else{
+          toast.error("failed")
+        }
+      }
+    }
+  );
 
   //userInfo = current state
   //setUserInfo = function to update the state
@@ -73,7 +155,7 @@ export function EditUserInfo() {
 
     if (getUserInfo.data?.education) {
       setUserEducation(
-        getUserInfo.data?.education.map((education: EducationInfo) => ({
+        getUserInfo.data?.education.map((education) => ({
           schoolName: education.schoolName,
           location: education.location ?? "",
           startDate: education.startDate,
@@ -265,10 +347,7 @@ export function EditUserInfo() {
     if (dt < 10) {
       formatteddt = `0${dt}`;
     }
-
-    console.log(year + "-" + formattedMonth + "-" + formatteddt);
     const value = year + "-" + formattedMonth + "-" + formatteddt;
-
     return value;
   };
 
@@ -563,6 +642,7 @@ export function EditUserInfo() {
           Save
         </button>
       </div>
+      
     </div>
   );
 }

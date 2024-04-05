@@ -85,7 +85,7 @@ export const educationRelations = relations(education, ({ one }) => ({
 export const skills = createTable("skills", {
   userId: varchar("userId", { length: 255 }).notNull()
     .references(() => users.id),
-  skills: varchar("skills", { length: 255 }),
+  skills: varchar("skill", { length: 255 }),
 })
 
 export const usersRelations = relations(users, ({ many }) => ({
