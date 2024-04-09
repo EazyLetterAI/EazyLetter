@@ -3,6 +3,8 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import exp from "constants";
+import path from "path";
+import { end } from "node_modules/cheerio/lib/esm/api/traversing";
 
 export const userInfoRouter = createTRPCRouter({
   retrieveUserInfo: protectedProcedure.query(async ({ ctx }) => {
@@ -102,11 +104,12 @@ export const userInfoRouter = createTRPCRouter({
           schoolName: z.string().min(1, {message: "School Name can't be empty"}),
           location: z.string(),
           startDate: z.date(),
-          endDate: z.date(),
+          endDate:  z.date().refine(d => new Date(d.startDate) < new Date(d.endDate), {message: "End date must be after start date", path: ['endDate']}),
           gpa: z.string(),
           degree: z.string(),
           honors: z.string(),
           relevantCoursework: z.string(),
+          
         }),
       ),
     )
