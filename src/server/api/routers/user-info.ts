@@ -2,13 +2,9 @@ import * as schema from "~/server/db/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
-import exp from "constants";
-import path from "path";
-import { end } from "node_modules/cheerio/lib/esm/api/traversing";
 
 export const userInfoRouter = createTRPCRouter({
   retrieveUserInfo: protectedProcedure.query(async ({ ctx }) => {
-    //retreiving the user's personal info from the data base
     const personalInfo = (
       await ctx.db
         .select({
@@ -19,8 +15,7 @@ export const userInfoRouter = createTRPCRouter({
           phone: schema.users.phone,
         })
         .from(schema.users)
-        // checks if the user id in the database matches with that of the current user's ud
-        .where(eq(schema.users.id, ctx.session.user.id))
+        .where(eq(schema.users.id, ctx.session.user.id))  // Filtering on the session user id
     )[0];
 
     const educationInfo = await ctx.db
@@ -77,11 +72,11 @@ export const userInfoRouter = createTRPCRouter({
   updatePersonalInfo: protectedProcedure
     .input(
       z.object({
-        firstname: z.string().min(1, {message: "First name can't be empty"}),
-        middlename: z.string().optional(),
-        lastname: z.string().min(1, {message: "Last name can't be empty"}),
-        address: z.string().optional(),
-        phone: z.string().optional(),
+        firstname: z.string().trim().min(1, { message: "First name can't be empty" }),
+        middlename: z.string().trim().optional(),
+        lastname: z.string().trim().min(1, { message: "Last name can't be empty" }),
+        address: z.string().trim().optional(),
+        phone: z.string().trim().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -101,16 +96,15 @@ export const userInfoRouter = createTRPCRouter({
     .input(
       z.array(
         z.object({
-          schoolName: z.string().min(1, {message: "School Name can't be empty"}),
-          location: z.string(),
+          schoolName: z.string().trim().min(1, { message: "School cannot be empty" }),
+          location: z.string().trim(),
           startDate: z.date(),
-          endDate:  z.date().refine(d => new Date(d.startDate) < new Date(d.endDate), {message: "End date must be after start date", path: ['endDate']}),
-          gpa: z.string(),
-          degree: z.string(),
-          honors: z.string(),
-          relevantCoursework: z.string(),
-          
-        }),
+          endDate: z.date(),
+          gpa: z.string().trim(),
+          degree: z.string().trim(),
+          honors: z.string().trim(),
+          relevantCoursework: z.string().trim(),
+        }).refine(d => new Date(d.startDate) < new Date(d.endDate), { message: "Start date must be before end date" }),
       ),
     )
     .mutation(async ({ ctx, input }) => {
@@ -118,32 +112,34 @@ export const userInfoRouter = createTRPCRouter({
         .delete(schema.education)
         .where(eq(schema.education.userId, ctx.session.user.id));
 
-      await ctx.db.insert(schema.education).values(
-        input.map((education) => ({
-          userId: ctx.session.user.id,
-          schoolName: education.schoolName,
-          location: education.location,
-          startDate: education.startDate,
-          endDate: education.endDate,
-          gpa: education.gpa,
-          degree: education.degree,
-          honors: education.honors,
-          relevantCoursework: education.relevantCoursework,
-        })),
-      );
+      if (input.length) {
+        await ctx.db.insert(schema.education).values(
+          input.map((education) => ({
+            userId: ctx.session.user.id,
+            schoolName: education.schoolName,
+            location: education.location,
+            startDate: education.startDate,
+            endDate: education.endDate,
+            gpa: education.gpa,
+            degree: education.degree,
+            honors: education.honors,
+            relevantCoursework: education.relevantCoursework,
+          })),
+        );
+      }
     }),
 
   updateExperienceInfo: protectedProcedure
     .input(
       z.array(
         z.object({
-          title: z.string(),
-          type: z.string().min(1, {message: "Experience type can't be empty"}),
-          location: z.string(),
+          title: z.string().trim(),
+          type: z.string().trim().min(1, { message: "Experience type cannot be empty" }),
+          location: z.string().trim(),
           startDate: z.date(),
           endDate: z.date(),
-          description: z.string(),
-          link: z.string(),
+          description: z.string().trim(),
+          link: z.string().trim(),
         }),
       ),
     )
@@ -152,25 +148,27 @@ export const userInfoRouter = createTRPCRouter({
         .delete(schema.userExperiences)
         .where(eq(schema.userExperiences.userId, ctx.session.user.id));
 
-      await ctx.db.insert(schema.userExperiences).values(
-        input.map((experiences) => ({
-          userId: ctx.session.user.id,
-          title: experiences.title,
-          type: experiences.type,
-          location: experiences.location,
-          startDate: experiences.startDate,
-          endDate: experiences.endDate,
-          description: experiences.description,
-          link: experiences.link,
-        })),
-      );
+      if (input.length) {
+        await ctx.db.insert(schema.userExperiences).values(
+          input.map((experiences) => ({
+            userId: ctx.session.user.id,
+            title: experiences.title,
+            type: experiences.type,
+            location: experiences.location,
+            startDate: experiences.startDate,
+            endDate: experiences.endDate,
+            description: experiences.description,
+            link: experiences.link,
+          })),
+        );
+      }
     }),
 
   updateSkillsInfo: protectedProcedure
     .input(
       z.array(
         z.object({
-          skill: z.string(),
+          skill: z.string().trim()
         }),
       ),
     )
@@ -179,20 +177,23 @@ export const userInfoRouter = createTRPCRouter({
         .delete(schema.skills)
         .where(eq(schema.skills.userId, ctx.session.user.id));
 
-      await ctx.db.insert(schema.skills).values(
-        input.map((skill) => ({
-          userId: ctx.session.user.id,
-          skills: skill.skill,
-        })),
-      );
+      const nonEmptySkills = input.filter((s) => s.skill.length > 0);
+      if (nonEmptySkills.length) {
+        await ctx.db.insert(schema.skills).values(
+          nonEmptySkills.map((skills) => ({
+            userId: ctx.session.user.id,
+            skills: skills.skill,
+          })),
+        );
+      }
     }),
 
   updateLinkInfo: protectedProcedure
     .input(
       z.array(
         z.object({
-          type: z.string().min(1, {message: "Link type can't be empty"}),
-          link: z.string().min(1, {message: "Link can't be empty"}),
+          type: z.string().min(1, { message: "Specify a link type" }),
+          link: z.string().min(1, { message: "Link cannot be empty" }),
         }),
       ),
     )
@@ -201,12 +202,14 @@ export const userInfoRouter = createTRPCRouter({
         .delete(schema.userLinks)
         .where(eq(schema.userLinks.userId, ctx.session.user.id));
 
-      await ctx.db.insert(schema.userLinks).values(
-        input.map((userlink) => ({
-          userId: ctx.session.user.id,
-          type: userlink.type,
-          link: userlink.link,
-        })),
-      );
+      if (input.length) {
+        await ctx.db.insert(schema.userLinks).values(
+          input.map((userlink) => ({
+            userId: ctx.session.user.id,
+            type: userlink.type,
+            link: userlink.link,
+          })),
+        );
+      }
     }),
 });
