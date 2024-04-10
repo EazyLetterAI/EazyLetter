@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useRef } from "react";
 import "react-quill/dist/quill.snow.css";
 import type ReactQuill from "react-quill";
 import { type Range, type UnprivilegedEditor } from "react-quill";
@@ -55,6 +55,7 @@ const Editor = memo(function Editor(props: {
   className?: string;
   placeholder?: string;
   initial?: string;
+  value?: Delta | string | undefined;
   setValue?: (value: Delta | string | undefined) => void;
   toolbarId?: string;
   onFocus?: (range: Range, source: Sources, editor: UnprivilegedEditor) => void;
@@ -110,6 +111,7 @@ const Editor = memo(function Editor(props: {
       modules={editorModules}
       formats={enabledFormats}
       defaultValue={props.initial}
+      value={props.value ?? props.initial}
       onChange={(value, delta, source, editor) => { props.setValue != undefined ? props.setValue(processValue(editor.getContents())) : undefined; }}
       onFocus={props.onFocus}
       className={props.className}

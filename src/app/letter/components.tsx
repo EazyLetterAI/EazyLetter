@@ -161,6 +161,7 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
             <Editor
               toolbarId="mainToolbar"
               placeholder="Write your cover letter..."
+              value={letterEditorValue}
               setValue={setLetterEditorValue}
               onFocus={useCallback(() => setFocusedEditor("main"), [])}
               generateAIHandler={generateLetterModal}
