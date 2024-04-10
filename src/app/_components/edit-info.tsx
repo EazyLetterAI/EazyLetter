@@ -55,9 +55,9 @@ export function EditUserInfo() {
           });
         }
                   
-        else{
-          toast.error("failed")
-        }
+        // else{
+        //   toast.error("failed")
+        // }
       }
     }   
   );
@@ -76,9 +76,9 @@ export function EditUserInfo() {
           });
         }
                   
-        else{
-          toast.error("failed")
-        }
+        // else{
+        //   toast.error("failed")
+        // }
       }
     }
   );
@@ -98,9 +98,9 @@ export function EditUserInfo() {
           });
         } 
                   
-        else{
-          toast.error("failed")
-        }
+        // else{
+        //   toast.error("failed")
+        // }
       }
     }
   );
@@ -120,9 +120,9 @@ export function EditUserInfo() {
             } 
           });
         }           
-        else{
-          toast.error("failed")
-        }
+        // else{
+        //   toast.error("failed")
+        // }
       }
     }
   );
@@ -290,7 +290,7 @@ export function EditUserInfo() {
       setUserExperiences(updatedExperience);
     }
   };
-  
+
 
   const addSkills = () => {
     setUserSkills([...userSkills, { ...{ skill: "" } }]);
@@ -325,6 +325,14 @@ export function EditUserInfo() {
       const newLinkList = [...userLinks];
       newLinkList[index] = newLink;
       setUserLinks(newLinkList);
+    }
+  };
+
+  const removeLink = (index: number) => {
+    if (userLinks.length > 1) {
+      const updatedLinks = [...userLinks];
+      updatedLinks.splice(index, 1); // Remove the education entry
+      setUserLinks(updatedLinks);
     }
   };
 
@@ -464,7 +472,7 @@ export function EditUserInfo() {
             }
           />
           <button
-            className="bg-red-500 text-white"
+            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
             onClick={() => removeEducation(index)}
           >
             {" "}
@@ -555,7 +563,7 @@ export function EditUserInfo() {
             }
           />
           <button
-            className="bg-red-500 text-white"
+            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
             onClick={() => removeExperience(index)}
           >
             {" "}
@@ -589,7 +597,7 @@ export function EditUserInfo() {
             />
             <button
                 onClick={() => removeSkill(index)}
-                className="px-4 py-2 text-black bg-red-500 hover:bg-red-600 focus:outline-none rounded-r-lg">
+                className="px-4 py-2 text-white bg-red-500 hover:bg-red-600 focus:outline-none rounded-r-lg">
                     -
             </button>
             </div>
@@ -626,6 +634,12 @@ export function EditUserInfo() {
               changeLinksInfo(index, "link", event.target.value)
             }
           />
+          <button
+            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+            onClick={() => removeLink(index)}
+          >
+             Remove
+          </button>
         </div>
       ))}
       <button
@@ -638,7 +652,7 @@ export function EditUserInfo() {
       </button>
 
       <div>
-        <button className="bg-white" onClick={() => updateUserInfo()}>
+        <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600" onClick={() => updateUserInfo()}>
           Save
         </button>
       </div>
