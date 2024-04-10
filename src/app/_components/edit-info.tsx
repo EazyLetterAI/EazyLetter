@@ -50,17 +50,10 @@ export function EditUserInfo() {
             toast.error(message ?? "Something went wrong!");
           });
         }
-<<<<<<< HEAD
                   
         // else{
         //   toast.error("failed")
         // }
-=======
-
-        else {
-          toast.error("failed")
-        }
->>>>>>> 850ff247520eadf6f373335e383dc944ab47b175
       }
     }
   );
@@ -78,17 +71,10 @@ export function EditUserInfo() {
             toast.error(message);
           });
         }
-<<<<<<< HEAD
                   
         // else{
         //   toast.error("failed")
         // }
-=======
-
-        else {
-          toast.error("failed")
-        }
->>>>>>> 850ff247520eadf6f373335e383dc944ab47b175
       }
     }
   );
@@ -106,19 +92,11 @@ export function EditUserInfo() {
               toast.error(message);
             }
           });
-<<<<<<< HEAD
         } 
                   
         // else{
         //   toast.error("failed")
         // }
-=======
-        }
-
-        else {
-          toast.error("failed")
-        }
->>>>>>> 850ff247520eadf6f373335e383dc944ab47b175
       }
     }
   );
@@ -137,17 +115,10 @@ export function EditUserInfo() {
               toast.error(message);
             }
           });
-<<<<<<< HEAD
         }           
         // else{
         //   toast.error("failed")
         // }
-=======
-        }
-        else {
-          toast.error("failed")
-        }
->>>>>>> 850ff247520eadf6f373335e383dc944ab47b175
       }
     }
   );
@@ -396,85 +367,6 @@ export function EditUserInfo() {
       <h2 className="text-2xl">Education</h2>
       {userEducation.map((education, index) => (
         <div key={index}>
-<<<<<<< HEAD
-          <input
-            type="text"
-            placeholder="School Name"
-            value={education.schoolName}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(e) =>
-              changeEducationInfo(index, "schoolName", e.target.value)
-            }
-          />
-          <input
-            type="text"
-            placeholder="Location"
-            value={education.location ?? ""}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(e) =>
-              changeEducationInfo(index, "location", e.target.value)
-            }
-          />
-          <input
-            type="date"
-            placeholder="Start Date"
-            value={formatDate(education.startDate)}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(e) =>
-              changeEducationInfo(index, "startDate",  new Date(e.target.value))
-            }
-          />
-          <input
-            type="date"
-            placeholder="End Date"
-            value={formatDate(education.endDate)}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(e) =>
-              changeEducationInfo(index, "endDate",  new Date(e.target.value))
-            }
-          />
-          <input
-            type="text"
-            placeholder="GPA"
-            value={education.gpa ?? ""}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(e) => changeEducationInfo(index, "gpa", e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Degree"
-            value={education.degree ?? ""}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(e) =>
-              changeEducationInfo(index, "degree", e.target.value)
-            }
-          />
-          <input
-            type="text"
-            placeholder="Honors"
-            value={education.honors ?? ""}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(e) =>
-              changeEducationInfo(index, "honors", e.target.value)
-            }
-          />
-          <input
-            type="text"
-            placeholder="Relevant Coursework"
-            value={education.relevantCoursework ?? ""}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(e) =>
-              changeEducationInfo(index, "relevantCoursework", e.target.value)
-            }
-          />
-          <button
-            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-            onClick={() => removeEducation(index)}
-          >
-            {" "}
-            Remove{" "}
-          </button>
-=======
           <input type="text" placeholder="School Name" value={education.schoolName} className="bg-transparent text-black border border-black m-1.5" onChange={(e) => changeEducationInfo(index, "schoolName", e.target.value)} />
           <input type="text" placeholder="Location" value={education.location ?? ""} className="bg-transparent text-black border border-black m-1.5" onChange={(e) => changeEducationInfo(index, "location", e.target.value)} />
           <input type="date" placeholder="Start Date" value={formatDate(education.startDate)} className="bg-transparent text-black border border-black m-1.5" onChange={(e) => changeEducationInfo(index, "startDate", new Date(e.target.value))} />
@@ -483,95 +375,14 @@ export function EditUserInfo() {
           <input type="text" placeholder="Degree" value={education.degree ?? ""} className="bg-transparent text-black border border-black m-1.5" onChange={(e) => changeEducationInfo(index, "degree", e.target.value)} />
           <input type="text" placeholder="Honors" value={education.honors ?? ""} className="bg-transparent text-black border border-black m-1.5" onChange={(e) => changeEducationInfo(index, "honors", e.target.value)} />
           <input type="text" placeholder="Relevant Coursework" value={education.relevantCoursework ?? ""} className="bg-transparent text-black border border-black m-1.5" onChange={(e) => changeEducationInfo(index, "relevantCoursework", e.target.value)} />
-          <button className="bg-red-500 text-white" onClick={() => removeEducation(index)}>Remove</button>
->>>>>>> 850ff247520eadf6f373335e383dc944ab47b175
+          <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 m-1.5" onClick={() => removeEducation(index)}>Remove</button>
         </div>
       ))}
-      <button className="bg-white" onClick={() => { addEducation(); }}>+</button>
+      <button className="bg-transparent" onClick={() => { addEducation(); }}>+</button>
 
       <h2 className="text-2xl">Experiences</h2>
       {userExperiences.map((experience, index) => (
         <div key={index}>
-<<<<<<< HEAD
-          <input
-            type="text"
-            placeholder="Title"
-            value={experience.title ?? ""}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(event) =>
-              changeExperienceInfo(index, "title", event.target.value)
-            }
-          />
-          <input
-            type="text"
-            placeholder="Job Type"
-            value={experience.type}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(event) =>
-              changeExperienceInfo(index, "type", event.target.value)
-            }
-          />
-          <input
-            type="text"
-            placeholder="Location"
-            value={experience.location ?? ""}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(event) =>
-              changeExperienceInfo(index, "location", event.target.value)
-            }
-          />
-          <input
-            type="date"
-            placeholder="Start Date"
-            value={formatDate(experience.startDate)}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(event) =>
-              changeExperienceInfo(
-                index,
-                "startDate",
-                new Date(event.target.value),
-              )
-            }
-          />
-          <input
-            type="date"
-            placeholder="End Date"
-            value={formatDate(experience.endDate)}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(event) =>
-              changeExperienceInfo(
-                index,
-                "endDate",
-                new Date(event.target.value),
-              )
-            }
-          />
-          <input
-            type="text"
-            placeholder="Description"
-            value={experience.description ?? ""}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(event) =>
-              changeExperienceInfo(index, "description", event.target.value)
-            }
-          />
-          <input
-            type="text"
-            placeholder="Link"
-            value={experience.link ?? ""}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(event) =>
-              changeExperienceInfo(index, "link", event.target.value)
-            }
-          />
-          <button
-            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-            onClick={() => removeExperience(index)}
-          >
-            {" "}
-            Remove{" "}
-          </button>
-=======
           <input type="text" placeholder="Title" value={experience.title ?? ""} className="bg-transparent text-black border border-black m-1.5" onChange={(event) => changeExperienceInfo(index, "title", event.target.value)} />
           <input type="text" placeholder="Job Type" value={experience.type} className="bg-transparent text-black border border-black m-1.5" onChange={(event) => changeExperienceInfo(index, "type", event.target.value)} />
           <input type="text" placeholder="Location" value={experience.location ?? ""} className="bg-transparent text-black border border-black m-1.5" onChange={(event) => changeExperienceInfo(index, "location", event.target.value)} />
@@ -579,88 +390,34 @@ export function EditUserInfo() {
           <input type="date" placeholder="End Date" value={formatDate(experience.endDate)} className="bg-transparent text-black border border-black m-1.5" onChange={(event) => changeExperienceInfo(index, "endDate", new Date(event.target.value))} />
           <input type="text" placeholder="Description" value={experience.description ?? ""} className="bg-transparent text-black border border-black m-1.5" onChange={(event) => changeExperienceInfo(index, "description", event.target.value)} />
           <input type="text" placeholder="Link" value={experience.link ?? ""} className="bg-transparent text-black border border-black m-1.5" onChange={(event) => changeExperienceInfo(index, "link", event.target.value)} />
-          <button className="bg-red-500 text-white" onClick={() => removeExperience(index)}>Remove</button>
->>>>>>> 850ff247520eadf6f373335e383dc944ab47b175
+          <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 m-1.5" onClick={() => removeExperience(index)}>Remove</button>
         </div>
       ))}
-      <button className="bg-white" onClick={() => { addExperience(); }}>+</button>
+      <button className="bg-transparent" onClick={() => { addExperience(); }}>+</button>
 
       <h2 className="text-2xl">Skills</h2>
       <div className="flex flex-wrap justify-center py-2">
         {userSkills.map((skill, index) => (
-<<<<<<< HEAD
-            <div key={index} className="flex items-center mx-1 mb-2 bg-transparent border border-black rounded-lg">
-            <input
-                type="text"
-                placeholder="Enter Skill"
-                value={skill.skill ?? ""}
-                className="flex-1 bg-transparent text-black rounded-l-lg focus:outline-none px-2"
-                onChange={(event) =>
-                changeSkillsInfo(index, "skill", event.target.value)
-                }
-                
-            />
-            <button
-                onClick={() => removeSkill(index)}
-                className="px-4 py-2 text-white bg-red-500 hover:bg-red-600 focus:outline-none rounded-r-lg">
-                    -
-            </button>
-            </div>
-            
-=======
           <div key={index} className="flex items-center mx-1 mb-2 bg-transparent border border-black rounded-lg">
             <input type="text" placeholder="Enter Skill" value={skill.skill ?? ""} className="flex-1 bg-transparent text-black rounded-l-lg focus:outline-none px-2" onChange={(event) => changeSkillsInfo(index, "skill", event.target.value)} />
-            <button onClick={() => removeSkill(index)} className="px-4 py-2 text-black bg-red-500 hover:bg-red-600 focus:outline-none rounded-r-lg">-</button>
+            <button onClick={() => removeSkill(index)} className="px-4 py-2 text-white bg-red-500 hover:bg-red-600 focus:outline-none rounded-r-lg">-</button>
           </div>
->>>>>>> 850ff247520eadf6f373335e383dc944ab47b175
         ))}
       </div>
-      <button className="bg-white" onClick={() => { addSkills(); }}>+</button>
+      <button className="bg-transparent" onClick={() => { addSkills(); }}>+</button>
 
       <h2 className="text-2xl">Links</h2>
       {userLinks.map((link, index) => (
         <div key={index}>
-<<<<<<< HEAD
-          <input
-            type="text"
-            placeholder="Type"
-            value={link.type}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(event) =>
-              changeLinksInfo(index, "type", event.target.value)
-            }
-          />
-          <input
-            type="text"
-            placeholder="Link"
-            value={link.link}
-            className="bg-transparent text-black border border-black m-1.5"
-            onChange={(event) =>
-              changeLinksInfo(index, "link", event.target.value)
-            }
-          />
-          <button
-            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-            onClick={() => removeLink(index)}
-          >
-             Remove
-          </button>
-=======
           <input type="text" placeholder="Type" value={link.type} className="bg-transparent text-black border border-black m-1.5" onChange={(event) => changeLinksInfo(index, "type", event.target.value)} />
           <input type="text" placeholder="Link" value={link.link} className="bg-transparent text-black border border-black m-1.5" onChange={(event) => changeLinksInfo(index, "link", event.target.value)} />
->>>>>>> 850ff247520eadf6f373335e383dc944ab47b175
+          <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 m-1.5" onClick={() => removeLink(index)}>Remove </button>
         </div>
       ))}
-      <button className="bg-white" onClick={() => { addLinks(); }}>+</button>
+      <button className="bg-transparent" onClick={() => { addLinks(); }}>+</button>
 
       <div>
-<<<<<<< HEAD
-        <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600" onClick={() => updateUserInfo()}>
-          Save
-        </button>
-=======
-        <button className="bg-white" onClick={() => updateUserInfo()}>Save</button>
->>>>>>> 850ff247520eadf6f373335e383dc944ab47b175
+        <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 m-2" onClick={() => updateUserInfo()}>Save</button>
       </div>
     </div>
   );
