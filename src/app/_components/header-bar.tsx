@@ -50,18 +50,28 @@ export function HeaderBar(props: {session: Session | null}) {
               </>
             )}
           </div>
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => {
-                setIsOpen(!isOpen);
-                console.log(isOpen);
-              }}>
-                {isOpen ? 
-                  <IoClose className="size-9"/> 
-                : 
-                  <RxHamburgerMenu className="size-9"/>
-                }
-            </button>
+          <div className="md:hidden flex items-center" 
+            onClick={() => {
+              setIsOpen(!isOpen);
+              console.log(isOpen);
+            }}>
+            {!isOpen ? 
+              <div>
+                <RxHamburgerMenu className="size-9"/>
+              </div>
+            : 
+              <div>
+                <IoClose className="size-9"/>
+                <div className="flex-row text-xl">
+                  <ul>
+                    <li><Link href="/">Features</Link></li>
+                    <li><Link href="/">Pricing</Link></li>
+                    <li><Link href="/">About</Link></li>
+                    <li><Link href="/api/auth/signin">Login</Link></li>
+                  </ul>
+                </div>
+              </div>
+            }
           </div>
         </div>
       </div>
