@@ -76,26 +76,26 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
   const emptyFields = jobDetails.length === 0 || applicantInfo.length === 0;
 
   return (
-    <div className="h-screen">
+    <>
       <Modal
         isOpen={generateIsOpen}
         onClose={() => setGenerateIsOpen(false)}
-        className="flex w-screen flex-col rounded-lg border border-slate-400 bg-gradient-to-tl from-purple-50 to-blue-100 p-4 px-8 shadow-xl sm:w-5/12 sm:px-8"
+        className="flex flex-col w-screen p-4 px-8 border rounded-lg shadow-xl border-slate-400 bg-gradient-to-tl from-purple-50 to-blue-100 sm:w-5/12 sm:px-8"
       >
         <button className="absolute self-end font-bold" onClick={() => setGenerateIsOpen(false)}>x</button>
-        <h1 className="my-3 text-center text-3xl text-slate-800">Generate with AI 🪄</h1>
+        <h1 className="my-3 text-3xl text-center text-slate-800">Generate with AI 🪄</h1>
         <label htmlFor="jobDetails" className="font-bold text-slate-800">Job Details</label>
         <textarea
           name="jobDetails"
           placeholder="Enter job details, or paste a link to the job posting"
-          className="bg-transparent text-slate-800 placeholder-gray-500 outline-none resize-none"
+          className="placeholder-gray-500 bg-transparent outline-none resize-none text-slate-800"
           onChange={(e) => setJobDetails(e.target.value)}
         />
         <label htmlFor="applicantInfo" className="font-bold text-slate-800">Applicant Info</label>
         <textarea
           name="applicantInfo"
           placeholder="Enter your resume info"
-          className="flex-grow bg-transparent text-slate-800 placeholder-gray-500 outline-none resize-none"
+          className="flex-grow placeholder-gray-500 bg-transparent outline-none resize-none text-slate-800"
           onChange={(e) => setApplicantInfo(e.target.value)}
         />
         <button
@@ -112,11 +112,11 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
           Generate Letter
         </button>
       </Modal>
-      <div className="space-y-2 z-10 flex h-3/5 w-screen flex-col rounded-lg border border-slate-400 bg-gradient-to-r from-slate-50 p-2 px-8 shadow-xl sm:sticky sm:top-1/4 sm:float-end sm:w-5/12 sm:px-2">
+      <div className="z-10 flex flex-col w-screen p-2 px-8 space-y-2 border rounded-lg shadow-xl h-[60vh] border-slate-400 bg-gradient-to-r from-slate-50 sm:sticky sm:top-1/4 sm:float-end sm:w-5/12 sm:px-2">
         <PDFViewerWidget pdf={deferredLetter} downloadFilename="letter.pdf"/>
       </div>
       <div
-        className={`w-screen space-y-2 rounded-lg border border-slate-400 bg-white p-2 px-8 text-sm sm:mt-8 sm:w-3/5 sm:p-4`}
+        className={`w-screen space-y-2 rounded-lg border border-slate-400 bg-white p-2 px-8 text-sm mb-8 sm:mt-8 sm:w-3/5 sm:p-4`}
       >
         <div className="m-auto flex min-h-[80vh] w-[99%] flex-col">
           <div className="relative mb-3">
@@ -135,7 +135,7 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
                 singleLine
                 onFocus={focusName}
                 generateAIHandler={generateLetterModal}
-                className="ql-single-line w-1/3"
+                className="w-1/3 ql-single-line"
               />)}
               <Editor
                 toolbarId="emailToolbar"
@@ -166,24 +166,24 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
               onFocus={useCallback(() => setFocusedEditor("main"), [])}
               generateAIHandler={generateLetterModal}
               editorRef={mainEditorRef}
-              className="border border-t-black border-x-0 border-b-0"
+              className="border border-b-0 border-t-black border-x-0"
             />
           </div>
           {res.isFetching && (
-            <div className="space-y-1 mt-5">
-              <p className="h-4 w-1/3 animate-pulse rounded-md bg-gray-400" />
+            <div className="mt-5 space-y-1">
+              <p className="w-1/3 h-4 bg-gray-400 rounded-md animate-pulse" />
               {Array.from({ length: 15 }, (_, i) => (
                 <p
                   key={i}
-                  className="h-4 w-full animate-pulse rounded-md bg-gray-400"
+                  className="w-full h-4 bg-gray-400 rounded-md animate-pulse"
                 />
               ))}
-              <p className="h-4 w-1/3 animate-pulse rounded-md bg-gray-400" />
-              <p className="h-4 w-1/3 animate-pulse rounded-md bg-gray-400" />
+              <p className="w-1/3 h-4 bg-gray-400 rounded-md animate-pulse" />
+              <p className="w-1/3 h-4 bg-gray-400 rounded-md animate-pulse" />
             </div>
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }

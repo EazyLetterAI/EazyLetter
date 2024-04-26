@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <main>
-      <HeaderBar session={session}/>
+      <HeaderBar session={session} dashboardHeader/>
       <div className="flex justify-center">
         <div className="w-screen md:max-w-5xl">
           <GenerateLetter userInfo={userInfo} userEmail={userEmail ?? ""} disableName={true}/>
