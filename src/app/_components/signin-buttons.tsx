@@ -6,9 +6,9 @@ import DiscordSVG from "public/icons/discord-mark-white.svg";
 
 export const SignIn = (props: { provider: string, logo?: React.ReactElement, backgroundColor: string, textColor: string, action?: string }) => {
   return (
-    <button className="w-48 h-10 px-3 flex flex-row items-center justify-center text-sm tracking-wide whitespace-nowrap rounded border border-gray-400 shadow-none hover:shadow-md transition-shadow ease-in-out duration-300" style={{ backgroundColor: props.backgroundColor, color: props.textColor }}>
+    <button className="flex flex-row items-center justify-center w-48 h-10 px-3 text-sm tracking-wide transition-shadow duration-300 ease-in-out border border-gray-400 rounded shadow-none whitespace-nowrap hover:shadow-md" style={{ backgroundColor: props.backgroundColor, color: props.textColor }}>
       <div className="flex flex-row items-center">
-        <div className="h-5 w-5 mr-3">
+        <div className="w-5 h-5 mr-3">
           {props.logo}
         </div>
         <span>{props.action ?? "Sign in"} with {props.provider}</span>

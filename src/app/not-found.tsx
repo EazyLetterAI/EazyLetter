@@ -9,9 +9,9 @@ export default async function NotFound() {
   return (
     <main>
       <div className="flex">
-        <HeaderBar session={session} />
+        <HeaderBar session={session} dashboardHeader/>
       </div>
-      <div className="flex min-h-screen flex-col items-center text-black">
+      <div className="flex flex-col items-center min-h-screen text-black">
         <div className="container flex flex-col items-center justify-center gap-2 px-4 mt-32">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             Error <span className="text-fuchsia-500">404</span>.

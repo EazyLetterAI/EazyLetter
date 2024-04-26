@@ -12,7 +12,7 @@ import type { Delta, Sources, StringMap } from "quill";
 const ReactQuillDynamic = dynamic(() => import("../rich-text/quill-dynamic"), {
   ssr: false,
   loading: () => (
-    <textarea className="resize-none italic text-gray-500" value="Loading..." readOnly/>
+    <textarea className="italic text-gray-500 resize-none" value="Loading..." readOnly/>
   ),
 });
 

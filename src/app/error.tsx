@@ -24,7 +24,7 @@ export default function Error({
       <div className="flex">
         <HeaderBar session={null}/>
       </div>
-      <div className="flex min-h-screen flex-col items-center text-black">
+      <div className="flex flex-col items-center min-h-screen text-black">
         <div className="container flex flex-col items-center justify-center gap-2 px-4 mt-32">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             <span className="text-fuchsia-500">Uh</span> oh!
@@ -34,7 +34,7 @@ export default function Error({
             <Link href="/" className="underline">Return home</Link> or <button onClick={() => reset()} className="underline">try again</button>.
           </h3>
           {searchParams?.error && (
-            <div className="bg-red-200 text-red-600 p-1 rounded mt-3">
+            <div className="p-1 mt-3 text-red-600 bg-red-200 rounded">
               <p>{errorMessages[searchParams.error]}</p>
             </div>
           )}

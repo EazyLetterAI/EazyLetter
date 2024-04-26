@@ -385,7 +385,7 @@ export function EditUserInfo() {
             }
           />
           <button
-            className="bg-red-500 text-white"
+            className="text-white bg-red-500"
             onClick={() => removeEducation(index)}
           >
             {" "}
@@ -476,7 +476,7 @@ export function EditUserInfo() {
             }
           />
           <button
-            className="bg-red-500 text-white"
+            className="text-white bg-red-500"
             onClick={() => removeExperience(index)}
           >
             {" "}
@@ -502,7 +502,7 @@ export function EditUserInfo() {
                 type="text"
                 placeholder="Enter Skill"
                 value={skill.skill ?? ""}
-                className="flex-1 bg-transparent text-black rounded-l-lg focus:outline-none px-2"
+                className="flex-1 px-2 text-black bg-transparent rounded-l-lg focus:outline-none"
                 onChange={(event) =>
                 changeSkillsInfo(index, "skill", event.target.value)
                 }
@@ -510,7 +510,7 @@ export function EditUserInfo() {
             />
             <button
                 onClick={() => removeSkill(index)}
-                className="px-4 py-2 text-black bg-red-500 hover:bg-red-600 focus:outline-none rounded-r-lg">
+                className="px-4 py-2 text-black bg-red-500 rounded-r-lg hover:bg-red-600 focus:outline-none">
                     -
             </button>
             </div>

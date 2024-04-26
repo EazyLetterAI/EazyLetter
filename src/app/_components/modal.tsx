@@ -24,7 +24,7 @@ export default function Modal(props: {
       style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", overflow: "hidden" }}
       onClick={props.onClose}
     >
-      <div className="absolute inset-0 z-50 m-auto flex h-fit items-center justify-center">
+      <div className="absolute inset-0 z-50 flex items-center justify-center m-auto h-fit">
         <div className={props.className} onClick={stopPropagation}>{props.children}</div>
       </div>
     </div>
