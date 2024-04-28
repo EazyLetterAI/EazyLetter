@@ -4,6 +4,7 @@ import { type BuiltInProviderType } from "next-auth/providers/index"
 import { signIn, type ClientSafeProvider } from "next-auth/react"
 import DiscordSVG from "public/icons/discord-mark-white.svg";
 
+// A nice button for signing in with a provider, adapted from Google's sign-in button
 export const SignIn = (props: { provider: string, logo?: React.ReactElement, backgroundColor: string, textColor: string, action?: string }) => {
   return (
     <button className="flex flex-row items-center justify-center w-48 h-10 px-3 text-sm tracking-wide transition-shadow duration-300 ease-in-out border border-gray-400 rounded shadow-none whitespace-nowrap hover:shadow-md" style={{ backgroundColor: props.backgroundColor, color: props.textColor }}>
@@ -30,6 +31,7 @@ export const GoogleIcon = () => {
 }
 
 export const SignInList = (props: { className?: string, providers: Record<BuiltInProviderType, ClientSafeProvider> | never[], actionString?: string }) => {
+  // Here is where we define the sign-in buttons for each provider
   const signinButtons: Record<string, React.ReactElement> = {
     google: <SignIn provider="Google" logo={<GoogleIcon />} backgroundColor="#ffffff" textColor="#000000" action={props.actionString} />,
     discord: <SignIn provider="Discord" logo={<DiscordSVG />} backgroundColor="#5865f2" textColor="#ffffff"action={props.actionString} />,

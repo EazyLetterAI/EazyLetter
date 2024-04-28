@@ -1,8 +1,10 @@
 import "~/styles/globals.css";
 
+import { TRPCReactProvider } from "~/trpc/react";
+
 import { Inter } from "next/font/google";
 
-import { TRPCReactProvider } from "~/trpc/react";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,6 +26,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider>{children}</TRPCReactProvider>
+        <Toaster/>
       </body>
     </html>
   );

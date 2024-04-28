@@ -1,7 +1,7 @@
 import { getServerAuthSession } from "~/server/auth";
-import { HeaderBar } from "./_components/header-bar";
+import { HeaderBar } from "./_components/nav/header-bar";
 import Link from "next/link";
-import Footer from "./_components/footer";
+import Footer from "./_components/nav/footer";
 
 export default async function NotFound() {
   const session = await getServerAuthSession();

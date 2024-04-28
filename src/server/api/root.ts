@@ -10,10 +10,10 @@ import { userInfoRouter } from "./routers/user-info";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  ai: openAIRouter,
+  userInfo: userInfoRouter,
   pdf: pdfRouter,
   scraping: scrapingRouter,
-  userInfo: userInfoRouter
+  ai: openAIRouter,
 });
 
 // export type definition of API

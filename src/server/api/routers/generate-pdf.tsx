@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import ReactPDF from "@react-pdf/renderer";
-import { CoverLetter } from "~/app/_components/pdf-generation";
+import { CoverLetter } from "~/utils/pdf-generation";
 
+// This is leftover from when the PDF generation was done on the server but most likely doesn't work anymore
 export const pdfRouter = createTRPCRouter({
   generateLetterPdf: protectedProcedure
     .input(z.object({ letterContents: z.string() }))

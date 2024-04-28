@@ -73,6 +73,7 @@ const getLineNumberRoman = (n: number) => {
   return str;
 }
 
+// This is the main function here which parses the Quill Delta object into a React PDF element
 function parseDelta(delta: Delta | undefined) {
   if (!delta) {
     return [];

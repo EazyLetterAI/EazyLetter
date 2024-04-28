@@ -1,4 +1,4 @@
-import { EditUserInfo } from "../_components/edit-info";
+import { EditUserInfo } from "../_components/widgets/edit-info";
 
 export default function Dashboard() {
   return (

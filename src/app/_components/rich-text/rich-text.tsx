@@ -51,6 +51,9 @@ export const makeNewDelta = (editor: ReactQuill | null, initial?: string) => {
   return editor?.getEditor().clipboard.convert(initial ?? "");
 };
 
+// This wraps the ReactQuill component to provide an easy interface for the rest of the app
+// You must store the actual editor state in the parent component
+// The main goal of the extra code is to allow for multiple editors on the same page with minimum hassle
 const Editor = memo(function Editor(props: {
   className?: string;
   placeholder?: string;

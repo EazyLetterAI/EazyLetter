@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
-import Logo from "../../../public/logo.png";
+import Logo from "public/logo.png";
 import type { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 
@@ -63,7 +63,7 @@ export function HeaderBar(props: { session: Session | null, dashboardHeader?: bo
             </button>
           </div>
         </div>
-        <hr className={`my-2 border-slate-700 border-y-1 transition-all ${isOpen ? "opacity-100" : "opacity-0 my-0"} md:opacity-0 md:my-0`}/>
+        <hr className={`border-slate-700 border-y-1 transition-all ${isOpen ? "opacity-100 my-2" : "opacity-0 my-0"} md:opacity-0 md:my-0`}/>
         <div className={`flex flex-col items-center justify-center w-full space-y-3 overflow-hidden transition-all h-auto ${isOpen ? "max-h-96 duration-700" : "max-h-0 duration-300"} md:max-h-0 md:duration-300`}>
           {linksLayout}
         </div>

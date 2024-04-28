@@ -2,8 +2,8 @@ import Link from "next/link";
 
 import React from "react";
 import { getServerAuthSession } from "~/server/auth";
-import { HeaderBar } from "~/app/_components/header-bar";
-import Footer from "./_components/footer";
+import { HeaderBar } from "~/app/_components/nav/header-bar";
+import Footer from "./_components/nav/footer";
 
 const PricingPlan = (props: { title: string; description: string; price: string | number; buttonText: string; features: string[] }) => (
   <div className="flex items-center justify-center w-3/4 px-8 py-2 space-x-4 bg-white md:block rounded-3xl md:w-1/3">

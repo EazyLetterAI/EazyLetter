@@ -32,6 +32,8 @@ export const openAIRouter = createTRPCRouter({
       if (!jobDetails)
         throw new TRPCError({ code: "BAD_REQUEST", message: "Failed to fetch job details" });
 
+      const userInfo = await api.userInfo.retrieveUserInfo.query() as object;
+
       // Query GPT to generate the letter
       const completion = await ctx.openai.chat.completions.create({
         messages: [
@@ -42,7 +44,8 @@ export const openAIRouter = createTRPCRouter({
             They will provide you with the job description, company description, and their own experiences. 
             You will use this information to generate a cover letter for them. They will give their data in JSON. 
             Output as plain text. Start the letter with Dear. End the letter with Sincerely.
-            If you are not provided with enough company or applicant information, simply make the letter generic. Do not acknowledge the lack of information in the letter.`,
+            If you are not provided with enough company or applicant information, simply make the letter generic. 
+            Do not acknowledge the lack of information in the letter.\nWe have some info on the user too: ${JSON.stringify(userInfo)}`,
           },
           { 
             role: "user", 

@@ -1,18 +1,19 @@
 import { getServerAuthSession } from "~/server/auth";
-import { HeaderBar } from "../_components/header-bar";
+import { HeaderBar } from "../_components/nav/header-bar";
 import GenerateLetter from "./components";
 import { redirect } from "next/navigation";
-import Footer from "../_components/footer";
+import Footer from "../_components/nav/footer";
 import { api } from "~/trpc/server";
 
 export default async function Home() {
   const session = await getServerAuthSession();
-  const userInfo = await api.userInfo.retrieveUserInfo.query();
-  const userEmail = session?.user?.email;
-
+  
   if (!session?.user) {
     return redirect("/api/auth/signin");
   }
+
+  const userInfo = await api.userInfo.retrieveUserInfo.query();
+  const userEmail = session?.user?.email;
 
   return (
     <main>

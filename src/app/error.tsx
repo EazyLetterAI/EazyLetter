@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { useEffect } from "react"
-import { HeaderBar } from "./_components/header-bar"
-import Footer from "./_components/footer"
+import { HeaderBar } from "./_components/nav/header-bar"
+import Footer from "./_components/nav/footer"
 import { errorMessages } from "./api/auth/messages"
 
 export default function Error({

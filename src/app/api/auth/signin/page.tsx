@@ -1,7 +1,7 @@
 import { getProviders } from "next-auth/react"
 import { getServerAuthSession } from "~/server/auth"
 import Link from "next/link";
-import SignInList from "~/app/_components/signin-buttons";
+import SignInList from "~/app/_components/widgets/signin-buttons";
 import { errorMessages } from "../messages";
 import { redirect } from "next/navigation";
 

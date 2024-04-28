@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 
+// This is a convenient Modal component that provides all the standard functionality you'd expect
+// Passing in the styling is a bit awkward but should work without much hassle
 export default function Modal(props: {
   isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   onClose: () => void;
   children: React.ReactNode[] | React.ReactNode;
   className?: string;
@@ -25,7 +28,10 @@ export default function Modal(props: {
       onClick={props.onClose}
     >
       <div className="absolute inset-0 z-50 flex items-center justify-center m-auto h-fit">
-        <div className={props.className} onClick={stopPropagation}>{props.children}</div>
+        <div className={`${props.className} relative`} onClick={stopPropagation}>
+          <button className="absolute font-bold top-1 right-3" onClick={() => props.setIsOpen(false)}>x</button>
+          {props.children}
+        </div>
       </div>
     </div>
   );

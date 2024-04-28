@@ -1,14 +1,26 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
+import { QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { TRPCClientError, loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import { useState } from "react";
 
 import { type AppRouter } from "~/server/api/root";
 import { getUrl, transformer } from "./shared";
+import toast from "react-hot-toast";
 
-const createQueryClient = () => new QueryClient();
+const createQueryClient = () => new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error) => {
+      if (error instanceof TRPCClientError) {
+        toast.error(`An error occurred: ${error.message}`);
+      } else {
+        toast.error("An unknown error occurred");
+        console.log(error);
+      }
+    }
+  })
+});
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined;
 const getQueryClient = () => {
