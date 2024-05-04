@@ -12,7 +12,7 @@ import type { Delta, Sources, StringMap } from "quill";
 const ReactQuillDynamic = dynamic(() => import("../rich-text/quill-dynamic"), {
   ssr: false,
   loading: () => (
-    <textarea className="italic text-gray-500 resize-none" value="Loading..." readOnly/>
+    <textarea className="italic text-gray-500 resize-none" value="Loading..." readOnly />
   ),
 });
 
@@ -111,7 +111,7 @@ const Editor = memo(function Editor(props: {
       formats={enabledFormats}
       defaultValue={props.initial}
       value={props.value ?? value}
-      onChange={(value, delta, source, editor) => { props.setValue?.(processValue(editor.getContents())) ?? setValue(processValue(editor.getContents()));}}
+      onChange={(value, delta, source, editor) => { props.setValue?.(processValue(editor.getContents())) ?? setValue(processValue(editor.getContents())); }}
       onFocus={props.onFocus}
       className={props.className}
       placeholder={props.placeholder}
@@ -121,16 +121,21 @@ const Editor = memo(function Editor(props: {
 
 export default Editor;
 
-export function Toolbar(props: { 
-  id: string; 
+export function Toolbar(props: {
+  id: string;
   className?: string;
   showGenerateAI?: boolean;
 }) {
   return (
     <div id={props.id} className={"ql-toolbar ql-snow " + props.className}> {/* a bit hacky but necessary here */}
       <span className="ql-formats">
-        <select className="ql-font"></select>
-        <select className="ql-header" defaultValue="0">
+        <select className="ql-font" defaultValue="default">
+          <option value="default">Default</option>
+          <option value="sans-serif">Sans Serif</option>
+          <option value="serif">Serif</option>
+          <option value="monospace">Monospace</option>
+        </select>
+        <select className="ql-header" defaultValue={0}>
           <option value="1"></option>
           <option value="2"></option>
           <option value="3"></option>

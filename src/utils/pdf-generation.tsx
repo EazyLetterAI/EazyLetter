@@ -89,7 +89,8 @@ function processLink(link: string) {
 }
 
 // This is the main function here which parses the Quill Delta object into a React PDF element
-function parseDelta(delta: Delta | undefined) {
+// The nested logic is quite convoluted but it is necessary to handle all the different cases succinctly
+function parseDelta(delta: Delta | undefined, defaultStyle?: Style) {
   if (!delta) {
     return [];
   }
@@ -108,25 +109,30 @@ function parseDelta(delta: Delta | undefined) {
 
     // Loop over each part of the line
     line.ops?.forEach((op, i) => {
-      const text = String(op.insert).replaceAll("\t", "    ");
+      let text = String(op.insert).replaceAll("\t", "    ");
+      if (defaultStyle?.textTransform === "uppercase") {
+        text = text.toUpperCase();
+      } else if (defaultStyle?.textTransform === "lowercase") {
+        text = text.toLowerCase();
+      }
 
       if (i === 0 && text.trimStart().length != text.length) {
         beginsWithWhitespace = true;
       }
 
       const style: Style = {
-        fontFamily: op.attributes?.font === "monospace" ? fontFamily.monospace : op.attributes?.font === "serif" ? fontFamily.serif : fontFamily.sans,
-        fontWeight: op.attributes?.bold ? "bold" : "normal",
-        fontStyle: op.attributes?.italic ? "italic" : "normal",
-        textDecoration: op.attributes?.underline ? (op.attributes?.strike ? "line-through underline" : "underline") : (op.attributes?.strike ? "line-through" : "none"),
-        color: String(op.attributes?.color),
-        backgroundColor: String(op.attributes?.background || "transparent"),
+        fontFamily: op.attributes?.font === "monospace" ? fontFamily.monospace : op.attributes?.font === "serif" ? fontFamily.serif : op.attributes?.font === "sans-serif" ? fontFamily.sans : defaultStyle?.fontFamily ?? fontFamily.sans,
+        fontWeight: op.attributes?.bold ? "bold" : defaultStyle?.fontWeight ?? "normal",
+        fontStyle: op.attributes?.italic ? "italic" : defaultStyle?.fontStyle ?? "normal",
+        textDecoration: op.attributes?.underline ? (op.attributes?.strike ? "line-through underline" : "underline") : (op.attributes?.strike ? "line-through" : defaultStyle?.textDecoration ?? "none"),
+        color: String(op.attributes?.color ?? defaultStyle?.color ?? "black"),
+        backgroundColor: String(op.attributes?.background ?? defaultStyle?.backgroundColor ?? "transparent"),
       };
 
       // For handling links properly
       const linkStyle: Style = {
-        color: String(op.attributes?.color ?? "blue"),
-        backgroundColor: String(op.attributes?.background || "transparent"),
+        color: String(op.attributes?.color ?? defaultStyle?.color ?? "blue"),
+        backgroundColor: String(op.attributes?.background ?? defaultStyle?.backgroundColor ?? "transparent"),
       }
 
       lineElements.push(<Text key={i} style={style}>
@@ -153,7 +159,6 @@ function parseDelta(delta: Delta | undefined) {
       }
       listIndents[lineIndent]++;
       if (listType === "ordered") {
-        console.log(lineIndent);
         if (lineIndent % 3 === 0) {
           listPrefix = (listIndents[lineIndent] ?? 0).toString() + ". ";
         } else if (lineIndent % 3 === 1) {
@@ -172,8 +177,8 @@ function parseDelta(delta: Delta | undefined) {
     }
 
     const style: Style = {
-      fontSize: [8, 10, 12, 14, 18, 24][6 - Number(attributes.header) || 2],
-      textAlign: attributes.align === "justify" ? "justify" : attributes.align === "center" ? "center" : attributes.align === "right" ? "right" : "left",
+      fontSize: attributes.header ? [8, 10, 12, 14, 18, 24][6 - Number(attributes.header)] : defaultStyle?.fontSize ?? 12,
+      textAlign: attributes.align === "justify" ? "justify" : attributes.align === "center" ? "center" : attributes.align === "right" ? "right" : defaultStyle?.textAlign ?? "left",
       paddingLeft: indent,
     };
 
@@ -225,40 +230,42 @@ export type ResumeInfo = {
   email?: Delta | string | null;
   phone?: Delta | string | null;
   address?: Delta | string | null;
+  objective?: Delta | string | null;
   experiences: {
     type: string;  // For templates that distinguish between different types of experiences
-    title?: string | null;
-    subtitle?: string | null;
-    location?: string | null;
-    startDate: string;
-    endDate?: string | null;
+    title?: Delta | string | null;
+    subtitle?: Delta | string | null;
+    location?: Delta | string | null;
+    startDate: Delta | string;
+    endDate?: Delta | string | null;
     link?: string | null;
-    description?: string | null;
+    description?: Delta | string | null;
   }[];
   education: {
-    schoolName: string;
-    location?: string | null;
-    startDate: string;
-    endDate?: string | null;
-    gpa?: string | null;
-    description?: string | null;
+    schoolName: Delta | string;
+    location?: Delta | string | null;
+    startDate: Delta | string;
+    endDate?: Delta | string | null;
+    details?: Delta | string | null;
   }[];
   links: {
     display?: Delta | string | null;
     link: string | null;
   }[];
-  skills?: string[];
+  skills?: Delta | string | null;
 };
 
 // The default resume template
 export function Resume(props: {
   info: ResumeInfo;
 }) {
-  const output = (contents?: Delta | string | null) => {
+  const text = { fontFamily: fontFamily.serif, fontSize: 12 };
+
+  const output = (contents?: Delta | string | null, defaultStyle?: Style) => {
     if (typeof contents === "string") {
-      return <Text>{contents}</Text>;
+      return <Text style={defaultStyle}>{contents}</Text>;
     } else if (contents) {
-      return parseDelta(contents);
+      return parseDelta(contents, { ...text, ...defaultStyle });
     }
   };
 
@@ -271,77 +278,84 @@ export function Resume(props: {
     }
   }
 
-  const text = { fontFamily: fontFamily.serif, fontSize: 12 };
-
   return (
     <Document>
       <Page wrap style={styles.page}>
         <View>
           <Text style={{ textAlign: "center", fontWeight: "bold", fontFamily: fontFamily.serif, fontSize: 18 }}>{output(props.info.name)}</Text>
-          {(props.info.address ?? props.info.phone ?? props.info.email ?? props.info.links.length) && <>
+          {(!empty(props.info.address) || !empty(props.info.phone) || !empty(props.info.email) || props.info.links.length) && <>
             <Divider />
             <View style={{ flexDirection: "row", justifyContent: "center", gap: 12 }}>
-              {!empty(props.info.address) && <Text style={text}>{output(props.info.address)}</Text>}
-              {!empty(props.info.phone) && <Text style={text}>{output(props.info.phone)}</Text>}
-              {!empty(props.info.email) && <Text style={text}>{output(props.info.email)}</Text>}
+              {!empty(props.info.address) && <Text>{output(props.info.address)}</Text>}
+              {!empty(props.info.phone) && <Text>{output(props.info.phone)}</Text>}
+              {!empty(props.info.email) && <Text>{output(props.info.email)}</Text>}
             </View>
             <View style={{ flexDirection: "row", justifyContent: "center", gap: 12 }}>
               {props.info.links.map((link, i) => (
-                !empty(link.link) && <Link key={i} href={processLink(link.link!)} style={text}>{output(!empty(link.display) ? link.display : link.link)}</Link>
+                !empty(link.link) && <Link key={i} href={processLink(link.link!)}>{output(!empty(link.display) ? link.display : link.link)}</Link>
               ))}
             </View>
           </>}
+          {!empty(props.info.objective) && (
+            <View>
+              <Divider />
+              <View style={{ alignItems: "center" }}>{output(props.info.objective)}</View>
+            </View>
+          )}
           {props.info.experiences.length && (
             <View style={{ marginVertical: 6 }}>
               <Text style={{ fontWeight: "bold", fontFamily: fontFamily.serif, fontSize: 14 }}>EXPERIENCE</Text>
               <Divider space={0} />
-              {props.info.experiences.map((exp, i) => (
-                <View key={i} style={{ flexDirection: "row" }}>
-                  <View style={{ flexGrow: 1 }}>
-                    <Text style={{ ...text, fontWeight: "bold" }}>
-                      {exp.link ? <Link src={exp.link}>{exp.title?.toUpperCase()}</Link> : exp.title?.toUpperCase()}
-                    </Text>
-                    <Text style={text}>{exp.subtitle}</Text>
-                    <Text style={text}>{exp.description}</Text>
+              <View style={{ marginTop: 6, gap: 12 }}>
+                {props.info.experiences.map((exp, i) => (
+                  !empty(exp.title) && <View key={i}>
+                    <View style={{ flexDirection: "row" }}>
+                      <View style={{ flexGrow: 1 }}>
+                        <Text>
+                          {exp.link ? <Link src={exp.link}>{output(exp.title, { fontWeight: "bold", textTransform: "uppercase" })}</Link> : output(exp.title, { fontWeight: "bold", textTransform: "uppercase" })}
+                        </Text>
+                        <Text>{output(exp.subtitle)}</Text>
+                      </View>
+                      <View>
+                        <Text style={{ ...text, alignSelf: "flex-end" }}>{output(exp.location)}</Text>
+                        {!empty(exp.startDate) && <Text style={{ ...text, fontStyle: "italic", alignSelf: "flex-end" }}>
+                          {output(exp.startDate, { fontStyle: "italic" })}-{output(!empty(exp.endDate) ? exp.endDate : "Present", { fontStyle: "italic" })}
+                        </Text>}
+                      </View>
+                    </View>
+                    <View style={{ marginTop: 5 }}>{output(exp.description)}</View>
                   </View>
-                  <View>
-                    <Text style={{ ...text, alignSelf: "flex-end" }}>{exp.location}</Text>
-                    <Text style={{ ...text, alignSelf: "flex-end" }}>{exp.startDate}-{exp.endDate ?? "Present"}</Text>
-                  </View>
-                </View>
-              ))}
+                ))}
+              </View>
             </View>
           )}
           {props.info.education.length && (
             <View style={{ marginVertical: 6 }}>
               <Text style={{ fontWeight: "bold", fontFamily: fontFamily.serif, fontSize: 14 }}>EDUCATION</Text>
               <Divider space={0} />
-              <View style={{ marginTop: 6, gap: 6 }}>
+              <View style={{ marginTop: 6, gap: 12 }}>
                 {props.info.education.map((edu, i) => (
                   <View key={i} style={{ flexDirection: "row" }}>
-                    <View style={{ flexGrow: 1 }}>
-                      <Text style={{ ...text, fontWeight: "bold" }}>{edu.schoolName.toUpperCase()}</Text>
-                      <Text style={text}>{edu.description}</Text>
-                      {edu.gpa && <Text style={text}>GPA: {edu.gpa}</Text>}
+                    <View style={{ width: "50%" }}>
+                      {output(edu.schoolName, { fontWeight: "bold", textTransform: "uppercase" })}
+                      {output(edu.details)}
                     </View>
-                    <View>
-                      <Text style={{ ...text, alignSelf: "flex-end" }}>{edu.location}</Text>
-                      <Text style={{ ...text, fontStyle: "italic", alignSelf: "flex-end" }}>{edu.startDate}-{edu.endDate ?? "Present"}</Text>
+                    <View style={{ width: "50%" }}>
+                      <Text style={{ ...text, alignSelf: "flex-end" }}>{output(edu.location)}</Text>
+                      {!empty(edu.startDate) && <Text style={{ ...text, fontStyle: "italic", alignSelf: "flex-end" }}>
+                        {output(edu.startDate, { fontStyle: "italic" })}-{output(!empty(edu.endDate) ? edu.endDate : "Present", { fontStyle: "italic" })}
+                      </Text>}
                     </View>
                   </View>
                 ))}
               </View>
             </View>
           )}
-          {props.info.skills?.length && (
+          {!empty(props.info.skills) && (
             <View style={{ marginVertical: 6 }}>
               <Text style={{ fontWeight: "bold", fontFamily: fontFamily.serif, fontSize: 14 }}>SKILLS</Text>
               <Divider space={0} />
-              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
-                {props.info.skills.map((skill, i) => (
-                  <Text key={i} style={{ ...text, backgroundColor: "lightgray", padding: 4, borderRadius: 4 }}>{skill}</Text>
-                ))}
-              </View>
+              <View style={{ marginTop: 6 }}>{output(props.info.skills)}</View>
             </View>
           )}
         </View>
