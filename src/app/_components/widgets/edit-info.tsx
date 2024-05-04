@@ -1,3 +1,5 @@
+// INCOMPLETE CODE FROM KEVIN AND GALILEO
+
 "use client";
 
 import { useEffect, useState } from "react";

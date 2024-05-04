@@ -34,6 +34,9 @@ export const users = createTable("user", {
   phone: varchar("phone", { length: 255 }),
 });
 
+// The following tables and relations were intended to be used with a user information page
+// and integrated with the resume generation feature. The user info page was never finished, 
+// so its relation to the resume page is not clear. These relations should probably be rethought.
 export const userLinks = createTable("userLink", {
   userId: varchar("userId", { length: 255 }).notNull()
     .references(() => users.id),
@@ -90,12 +93,14 @@ export const educationRelations = relations(education, ({ one }) => ({
 export const skills = createTable("skills", {
   userId: varchar("userId", { length: 255 }).notNull()
     .references(() => users.id),
-  skill: varchar("skill", { length: 255 }),
+  skill: varchar("skill", { length: 255 }).notNull(),
 }, (skills) => ({
   primaryKey: primaryKey({columns: [skills.userId, skills.skill]}),
   userIdIdx: index("skills_userId_idx").on(skills.userId),
 }));
 
+// files and fileRelations are supposed to be used for storing user files, however that 
+// functionality was not finished
 export const files = createTable("files", {
   fileUrl: varchar("fileId", { length: 255 }).notNull(),
   userId: varchar("userId", { length: 255 }).notNull()

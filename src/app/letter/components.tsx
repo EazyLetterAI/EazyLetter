@@ -101,7 +101,7 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
             } else if ((event.data as { message: string, name:string }).message !== undefined) {
               toast.error((event.data as { message: string, name:string }).message);
               setIsParsingPDF(false);
-              setLastFile("Upload resume");
+              setLastFile(undefined);
             }
           };
           pdfToTextWorker.postMessage(buffer);
@@ -182,10 +182,10 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
       >
         <div className="m-auto flex min-h-[80vh] w-[99%] flex-col">
           <div className="relative mb-3">
-            <Toolbar id="mainToolbar" className={`relative left-0 top-0 ` + (focusedEditor === "main" ? `` : `hidden`)} />
-            <Toolbar id="nameToolbar" className={`relative left-0 top-0 ` + (focusedEditor === "name" ? `` : `hidden`)} />
-            <Toolbar id="emailToolbar" className={`relative left-0 top-0 ` + (focusedEditor === "email" ? `` : `hidden`)} />
-            <Toolbar id="phoneToolbar" className={`relative left-0 top-0 ` + (focusedEditor === "phone" ? `` : `hidden`)} />
+            <Toolbar id="mainToolbar" showGenerateAI className={`relative left-0 top-0 ` + (focusedEditor === "main" ? `` : `hidden`)} />
+            <Toolbar id="nameToolbar" showGenerateAI className={`relative left-0 top-0 ` + (focusedEditor === "name" ? `` : `hidden`)} />
+            <Toolbar id="emailToolbar" showGenerateAI className={`relative left-0 top-0 ` + (focusedEditor === "email" ? `` : `hidden`)} />
+            <Toolbar id="phoneToolbar" showGenerateAI className={`relative left-0 top-0 ` + (focusedEditor === "phone" ? `` : `hidden`)} />
           </div>
           <div className={res.isFetching ? "hidden" : ""}>
             <div className="flex">
