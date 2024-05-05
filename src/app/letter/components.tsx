@@ -199,7 +199,7 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
         className={`w-screen space-y-2 rounded-lg border border-slate-400 bg-white p-2 px-8 text-sm mb-8 sm:mt-8 sm:w-3/5 sm:p-4`}
       >
         <div className="m-auto flex min-h-[80vh] w-[99%] flex-col">
-          <div className="mb-3 sticky bg-white z-40" style={{ top: `${(headerHeight - 0.1).toFixed(1)}px` }}>
+          <div className="mb-3 sticky bg-white z-30" style={{ top: `${(headerHeight - 0.1).toFixed(1)}px` }}>
             <Toolbar id="mainToolbar" showGenerateAI className={`relative left-0 top-0 ` + (focusedEditor === "main" ? `` : `hidden`)} />
             <Toolbar id="nameToolbar" showGenerateAI className={`relative left-0 top-0 ` + (focusedEditor === "name" ? `` : `hidden`)} />
             <Toolbar id="emailToolbar" showGenerateAI className={`relative left-0 top-0 ` + (focusedEditor === "email" ? `` : `hidden`)} />
