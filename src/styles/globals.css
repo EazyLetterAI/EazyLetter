@@ -1,3 +1,6 @@
+/* This is for manually styling elements. You should not generally need to use this file,
+but we are using it for overriding Quill's styling. */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,10 +20,49 @@ body {
     @apply border-none;
 }
 
-.ql-single-line .ql-editor {
-    @apply py-1;
+/* Use margin instead of padding so that clicks go through */
+.ql-editor.ql-editor {
+    @apply mx-[15px] my-[12px];
+    @apply p-0;
+}
+
+.ql-compact .ql-editor {
+    @apply my-1;
 }
 
 .ql-snow.ql-toolbar button.ql-generateLetter {
     @apply w-fit;
+}
+
+/* Font config for Quill */
+#toolbar-container .ql-font span[data-label=default]::before {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+}
+
+#toolbar-container .ql-font span[data-label=sans-serif]::before {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+}
+
+#toolbar-container .ql-font span[data-label=serif]::before {
+    font-family: "Georgia", "Times New Roman", "serif";
+}
+
+#toolbar-container .ql-font span[data-label=monospace]::before {
+    font-family: "Monaco", "Courier New", "monospace";
+}
+
+.ql-editor .ql-font-default {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+}
+
+.ql-editor .ql-font-sans-serif {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+}
+
+.ql-editor .ql-font-serif {
+    font-family: "Georgia", "Times New Roman", "serif";
+}
+
+.ql-editor .ql-font-monospace {
+    font-family: "Monaco", "Courier New", "monospace";
 }

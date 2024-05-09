@@ -1,3 +1,5 @@
+// INCOMPLETE CODE FROM CHARLES
+
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { getServerAuthSession } from "~/server/auth";

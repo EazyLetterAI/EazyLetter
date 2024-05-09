@@ -1,3 +1,5 @@
+// INCOMPLETE CODE FROM CHARLES
+
 import {
     generateUploadButton,
     generateUploadDropzone,

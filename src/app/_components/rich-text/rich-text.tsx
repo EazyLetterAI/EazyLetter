@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React, { memo, useCallback, useEffect, useRef } from "react";
+import React, { memo, useCallback, useRef } from "react";
 import "react-quill/dist/quill.snow.css";
 import type ReactQuill from "react-quill";
 import { type Range, type UnprivilegedEditor } from "react-quill";
@@ -12,10 +12,11 @@ import type { Delta, Sources, StringMap } from "quill";
 const ReactQuillDynamic = dynamic(() => import("../rich-text/quill-dynamic"), {
   ssr: false,
   loading: () => (
-    <textarea className="italic text-gray-500 resize-none" value="Loading..." readOnly/>
+    <textarea className="italic text-gray-500 resize-none" value="Loading..." readOnly />
   ),
 });
 
+// This is used for a default toolbar if a toolbarId is not provided
 const toolbarOptions = [
   [{ font: [] }],
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -66,12 +67,8 @@ const Editor = memo(function Editor(props: {
   editorRef?: React.RefObject<ReactQuill>;
   generateAIHandler?: (editor?: UnprivilegedEditor) => void;
 }) {
-  const { setValue, initial } = props;
-  useEffect(() => {
-    if (setValue && initial) {
-      setValue(initial);
-    }
-  }, [setValue, initial]);
+  // Store the value state internally if it's not provided
+  const [value, setValue] = React.useState<Delta | string | undefined>(props.initial);
 
   const editorRef = useRef<ReactQuill>(null);
   const effectiveRef = props.editorRef ?? editorRef;
@@ -114,8 +111,8 @@ const Editor = memo(function Editor(props: {
       modules={editorModules}
       formats={enabledFormats}
       defaultValue={props.initial}
-      value={props.value ?? props.initial}
-      onChange={(value, delta, source, editor) => { props.setValue != undefined ? props.setValue(processValue(editor.getContents())) : undefined; }}
+      value={props.value ?? value}
+      onChange={(value, delta, source, editor) => { props.setValue?.(processValue(editor.getContents())) ?? setValue(processValue(editor.getContents())); }}
       onFocus={props.onFocus}
       className={props.className}
       placeholder={props.placeholder}
@@ -125,12 +122,21 @@ const Editor = memo(function Editor(props: {
 
 export default Editor;
 
-export function Toolbar(props: { id: string; className?: string }) {
+export function Toolbar(props: {
+  id: string;
+  className?: string;
+  showGenerateAI?: boolean;
+}) {
   return (
     <div id={props.id} className={"ql-toolbar ql-snow " + props.className}> {/* a bit hacky but necessary here */}
       <span className="ql-formats">
-        <select className="ql-font"></select>
-        <select className="ql-header" defaultValue="0">
+        <select className="ql-font" defaultValue="default">
+          <option value="default">Default</option>
+          <option value="sans-serif">Sans Serif</option>
+          <option value="serif">Serif</option>
+          <option value="monospace">Monospace</option>
+        </select>
+        <select className="ql-header" defaultValue={0}>
           <option value="1"></option>
           <option value="2"></option>
           <option value="3"></option>
@@ -165,11 +171,11 @@ export function Toolbar(props: { id: string; className?: string }) {
       <span className="ql-formats">
         <button className="ql-clean"></button>
       </span>
-      <span className="ql-formats">
+      {props.showGenerateAI && <span className="ql-formats">
         <button className="ql-generateLetter">
           <span className="font-bold">Generate with AI 🪄</span>
         </button>
-      </span>
+      </span>}
     </div>
   );
 }

@@ -1,11 +1,13 @@
+// This could be cleaned up a bit
+
 import * as schema from "~/server/db/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 export const userInfoRouter = createTRPCRouter({
+  // This procedure defines the UserInfo type
   retrieveUserInfo: protectedProcedure.query(async ({ ctx }) => {
-    //retreiving the user's personal info from the data base
     const personalInfo = (
       await ctx.db
         .select({
@@ -16,7 +18,6 @@ export const userInfoRouter = createTRPCRouter({
           phone: schema.users.phone,
         })
         .from(schema.users)
-        // checks if the user id in the database matches with that of the current user's ud
         .where(eq(schema.users.id, ctx.session.user.id))
     )[0];
 

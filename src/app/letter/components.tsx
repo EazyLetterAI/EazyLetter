@@ -21,7 +21,25 @@ import toast from "react-hot-toast";
 
 type UserInfo = RouterOutputs["userInfo"]["retrieveUserInfo"];
 
-export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: string, disableName?: boolean }) {
+export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: string, disableName?: boolean, headerId?: string }) {
+  // Scrolling behavior
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  const headerSizeChanged = useCallback(() => {
+    if (props.headerId) {
+      const headerElement = document.getElementById(props.headerId);
+      if (headerElement) {
+        const { height } = headerElement.getBoundingClientRect();
+        setHeaderHeight(height);
+      }
+    }
+  }, [props.headerId]);
+
+  useEffect(() => {
+    window.addEventListener("resize", headerSizeChanged, false);
+    headerSizeChanged();
+  }, [headerSizeChanged]);
+
   // AI prompt state
   const [jobDetails, setJobDetails] = useState("");
   const [applicantInfo, setApplicantInfo] = useState("");
@@ -98,10 +116,10 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
               setIsParsingPDF(false);
               setApplicantInfo(textContent);
               setLastFile(file.name);
-            } else if ((event.data as { message: string, name:string }).message !== undefined) {
-              toast.error((event.data as { message: string, name:string }).message);
+            } else if ((event.data as { message: string, name: string }).message !== undefined) {
+              toast.error((event.data as { message: string, name: string }).message);
               setIsParsingPDF(false);
-              setLastFile("Upload resume");
+              setLastFile(undefined);
             }
           };
           pdfToTextWorker.postMessage(buffer);
@@ -146,8 +164,8 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
             <label htmlFor="applicantInfo" className="self-end font-bold text-slate-800">Applicant Info</label>
             <div className="flex-grow min-w-4" />
             <label className={`flex gap-1 text-2xl align-middle text-black ${!isParsingPDF ? "hover:text-slate-500 cursor-pointer" : ""}`}>
-              <input type="file" className="hidden" accept=".pdf" onChange={(event) => handleResumeUpload(event.target.files?.[0])} disabled={isParsingPDF}/>
-              {isParsingPDF ? <Spinner/> : <MdUploadFile/>}
+              <input type="file" className="hidden" accept=".pdf" onChange={(event) => handleResumeUpload(event.target.files?.[0])} disabled={isParsingPDF} />
+              {isParsingPDF ? <Spinner /> : <MdUploadFile />}
               <p className="self-end overflow-hidden text-sm italic align-bottom max-w-80 whitespace-nowrap text-ellipsis" title={lastFile}>{lastFile ?? "Upload resume"}</p>
             </label>
           </div>
@@ -181,11 +199,11 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
         className={`w-screen space-y-2 rounded-lg border border-slate-400 bg-white p-2 px-8 text-sm mb-8 sm:mt-8 sm:w-3/5 sm:p-4`}
       >
         <div className="m-auto flex min-h-[80vh] w-[99%] flex-col">
-          <div className="relative mb-3">
-            <Toolbar id="mainToolbar" className={`relative left-0 top-0 ` + (focusedEditor === "main" ? `` : `hidden`)} />
-            <Toolbar id="nameToolbar" className={`relative left-0 top-0 ` + (focusedEditor === "name" ? `` : `hidden`)} />
-            <Toolbar id="emailToolbar" className={`relative left-0 top-0 ` + (focusedEditor === "email" ? `` : `hidden`)} />
-            <Toolbar id="phoneToolbar" className={`relative left-0 top-0 ` + (focusedEditor === "phone" ? `` : `hidden`)} />
+          <div className="mb-3 sticky bg-white z-30" style={{ top: `${(headerHeight - 0.1).toFixed(1)}px` }}>
+            <Toolbar id="mainToolbar" showGenerateAI className={`relative left-0 top-0 ` + (focusedEditor === "main" ? `` : `hidden`)} />
+            <Toolbar id="nameToolbar" showGenerateAI className={`relative left-0 top-0 ` + (focusedEditor === "name" ? `` : `hidden`)} />
+            <Toolbar id="emailToolbar" showGenerateAI className={`relative left-0 top-0 ` + (focusedEditor === "email" ? `` : `hidden`)} />
+            <Toolbar id="phoneToolbar" showGenerateAI className={`relative left-0 top-0 ` + (focusedEditor === "phone" ? `` : `hidden`)} />
           </div>
           <div className={res.isFetching ? "hidden" : ""}>
             <div className="flex">
@@ -197,7 +215,7 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
                 singleLine
                 onFocus={focusName}
                 generateAIHandler={generateLetterModal}
-                className="w-1/3 ql-single-line"
+                className="w-1/3 ql-compact"
               />)}
               <Editor
                 toolbarId="emailToolbar"
@@ -207,7 +225,7 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
                 singleLine
                 onFocus={useCallback(() => setFocusedEditor("email"), [])}
                 generateAIHandler={generateLetterModal}
-                className={`ql-single-line ${props.disableName ? "w-1/2" : "w-1/3"}`}
+                className={`ql-compact ${props.disableName ? "w-1/2" : "w-1/3"}`}
               />
               <Editor
                 toolbarId="phoneToolbar"
@@ -217,7 +235,7 @@ export default function GenerateLetter(props: { userInfo: UserInfo, userEmail: s
                 singleLine
                 onFocus={useCallback(() => setFocusedEditor("phone"), [])}
                 generateAIHandler={generateLetterModal}
-                className={`ql-single-line ${props.disableName ? "w-1/2" : "w-1/3"}`}
+                className={`ql-compact ${props.disableName ? "w-1/2" : "w-1/3"}`}
               />
             </div>
             <Editor

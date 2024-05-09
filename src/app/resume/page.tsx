@@ -1,6 +1,6 @@
 import { getServerAuthSession } from "~/server/auth";
 import { HeaderBar } from "../_components/nav/header-bar";
-import GenerateLetter from "./components";
+import GenerateResume from "./components";
 import { redirect } from "next/navigation";
 import Footer from "../_components/nav/footer";
 import { api } from "~/trpc/server";
@@ -19,10 +19,10 @@ export default async function Home() {
 
   return (
     <main>
-      <HeaderBar session={session} dashboardHeader headerId={headerId} />
+      <HeaderBar session={session} dashboardHeader headerId={headerId}/>
       <div className="flex justify-center">
         <div className="w-screen md:max-w-5xl">
-          <GenerateLetter userInfo={userInfo} userEmail={userEmail ?? ""} disableName={true} headerId={headerId} />
+          <GenerateResume userInfo={userInfo} userEmail={userEmail ?? ""} disableName={true} headerId={headerId} />
         </div>
       </div>
       <Footer />

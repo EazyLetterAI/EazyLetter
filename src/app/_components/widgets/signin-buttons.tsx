@@ -34,7 +34,7 @@ export const SignInList = (props: { className?: string, providers: Record<BuiltI
   // Here is where we define the sign-in buttons for each provider
   const signinButtons: Record<string, React.ReactElement> = {
     google: <SignIn provider="Google" logo={<GoogleIcon />} backgroundColor="#ffffff" textColor="#000000" action={props.actionString} />,
-    discord: <SignIn provider="Discord" logo={<DiscordSVG />} backgroundColor="#5865f2" textColor="#ffffff"action={props.actionString} />,
+    discord: <SignIn provider="Discord" logo={<DiscordSVG />} backgroundColor="#5865f2" textColor="#ffffff" action={props.actionString} />,
   }
   
   return (

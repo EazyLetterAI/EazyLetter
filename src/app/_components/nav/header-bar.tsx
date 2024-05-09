@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import Logo from "public/logo.png";
 import type { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 
 const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-black transition ease transform duration-300`;
 
-export function HeaderBar(props: { session: Session | null, dashboardHeader?: boolean }) {
+export const HeaderBar = forwardRef(function HeaderBar(props: { session: Session | null, dashboardHeader?: boolean, headerId?: string }, ref: React.Ref<HTMLDivElement>) {
   const [isOpen, setIsOpen] = useState(false);
 
   const links = props.session && props.dashboardHeader ? [
@@ -42,7 +42,7 @@ export function HeaderBar(props: { session: Session | null, dashboardHeader?: bo
   return (
     <>
       <div className="h-16"></div>
-      <div className="fixed top-0 z-50 w-full px-4 py-2 bg-white shadow-sm nav">
+      <div id={props.headerId} className="fixed top-0 z-50 w-full px-4 py-2 bg-white shadow-sm nav" ref={ref}>
         <div className="flex flex-row items-center justify-between">
           <div className="px-4 logo scroll-smooth min-w-fit">
             <Link href="/#home" className="flex flex-row items-center space-x-5">
@@ -70,4 +70,4 @@ export function HeaderBar(props: { session: Session | null, dashboardHeader?: bo
       </div>
     </>
   );
-}
+});
