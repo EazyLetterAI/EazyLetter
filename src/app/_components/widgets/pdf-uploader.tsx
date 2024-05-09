@@ -1,3 +1,5 @@
+// This is part of the incomplete UploadThing functionality.
+
 "use client";
 
 import { UploadButton } from "~/utils/uploadthing";

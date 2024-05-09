@@ -261,6 +261,9 @@ export function Resume(props: {
 }) {
   const text = { fontFamily: fontFamily.serif, fontSize: 12 };
 
+  // Since the ResumeInfo can store either Delta objects or plain strings, we need some utility
+  // methods to handle both cases. This template relies heavily on using empty to conditionally
+  // render elements. And rendering is always done using the output method.
   const output = (contents?: Delta | string | null, defaultStyle?: Style) => {
     if (typeof contents === "string") {
       return <Text style={defaultStyle}>{contents}</Text>;
@@ -269,7 +272,6 @@ export function Resume(props: {
     }
   };
 
-  // This is a helper function to see if a string or Delta is empty
   const empty = (contents?: Delta | string | null) => {
     if (typeof contents === "string") {
       return contents.length === 0;

@@ -16,6 +16,7 @@ const ReactQuillDynamic = dynamic(() => import("../rich-text/quill-dynamic"), {
   ),
 });
 
+// This is used for a default toolbar if a toolbarId is not provided
 const toolbarOptions = [
   [{ font: [] }],
   [{ header: [1, 2, 3, 4, 5, 6, false] }],

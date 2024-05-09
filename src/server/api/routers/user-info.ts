@@ -1,3 +1,5 @@
+// This could be cleaned up a bit
+
 import * as schema from "~/server/db/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { eq } from "drizzle-orm";

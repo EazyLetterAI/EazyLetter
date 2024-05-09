@@ -71,6 +71,7 @@ export default function GenerateResume(props: { userInfo: UserInfo, userEmail: s
   const [resumeInfo, setResumeInfo] = useState<ResumeInfo>(initializeResumeInfo(props.userInfo, props.userEmail));
 
   // Editor values
+  // Note that each editor has its own toolbar and visibility must be toggled manually
   const [focusedEditor, setFocusedEditor] = useState("disabled");
   const setNewName = useCallback((value: string | Delta | undefined) => setResumeInfo((prev) => ({ ...prev, name: value ?? "" })), [])
   const focusName = useCallback(() => setFocusedEditor("name"), []);
